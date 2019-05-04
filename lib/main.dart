@@ -10,6 +10,14 @@ class MainScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text("recipedient"),
         ), // AppBar
+        body: Card(
+          child: Column(
+            children: <Widget>[
+              Image.asset('resources/logo2.png'),
+              Text("recipedient"),
+            ],
+          ), // Column
+        ), // Card
       ), // Scaffold
     ); // MaterialApp
   }
