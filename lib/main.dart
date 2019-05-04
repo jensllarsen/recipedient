@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-main() {
-  runApp(MainScreen());
-}
+void main() => runApp(MainScreen());
 
 class MainScreen extends StatelessWidget {
   @override
@@ -11,8 +9,8 @@ class MainScreen extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text("recipedient"),
-        ),
-      ),
-    );
+        ), // AppBar
+      ), // Scaffold
+    ); // MaterialApp
   }
 }
