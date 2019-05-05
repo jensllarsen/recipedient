@@ -1,4 +1,4 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -10,7 +10,17 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return new Container();
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(hintText: 'Ingredents'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
