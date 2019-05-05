@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:recipedient/search.dart';
-import 'package:recipedient/saved.dart';
-import 'package:recipedient/shopping.dart';
+import 'package:recipedient/view/search.dart';
+import 'package:recipedient/view/saved.dart';
+import 'package:recipedient/view/shopping.dart';
 
 void main() => runApp(MainScreen());
 
