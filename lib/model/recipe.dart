@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'ingredient.dart';
+
 Recipe recipeFromJson(String str) => Recipe.fromMap(json.decode(str));
 
 String recipeToJson(Recipe data) => json.encode(data.toMap());
@@ -85,25 +87,5 @@ class RecipeClass {
             new List<dynamic>.from(ingredientLines.map((x) => x)),
         "ingredients":
             new List<dynamic>.from(ingredients.map((x) => x.toMap())),
-      };
-}
-
-class Ingredient {
-  String text;
-  double weight;
-
-  Ingredient({
-    this.text,
-    this.weight,
-  });
-
-  factory Ingredient.fromMap(Map<String, dynamic> json) => new Ingredient(
-        text: json["text"],
-        weight: json["weight"].toDouble(),
-      );
-
-  Map<String, dynamic> toMap() => {
-        "text": text,
-        "weight": weight,
       };
 }
