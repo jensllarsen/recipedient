@@ -21,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
             length: 3,
             child: Scaffold(
                 appBar: AppBar(
-                  title: Text('recipedent'),
+                  title: Text('recipedient'),
                   bottom: TabBar(
                     tabs: [
                       Tab(text: 'Search', icon: Icon(Icons.search)),
