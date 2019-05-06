@@ -18,7 +18,6 @@ class RecipeApiProvider {
   final String _query = "chicken";
 
   Future<Recipe> fetchMatchingRecipes() async {
-    print("entered");
     final response = await client
         .get("$_endpoint?q=$_query&app_id=$app_id&app_key=$app_key");
     print(response.body.toString());
@@ -27,7 +26,8 @@ class RecipeApiProvider {
       return Recipe.fromMap(json.decode(response.body));
     } else {
       // If that call was not successful, throw an error.
-      throw Exception('Failed to load post');
+      throw Exception(
+          'Failed to load recipes in RecipeApiProvider: $response.statusCode');
     }
   }
 }
