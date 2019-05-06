@@ -2,7 +2,7 @@ import 'dart:async';
 import 'recipeapiprovider.dart';
 import 'package:recipedient/model/recipe.dart';
 
-class Repository {
+class RecipeRepository {
   final recipeApiProvider = RecipeApiProvider();
 
   Future<Recipe> fetchMatchingRecipes() =>
