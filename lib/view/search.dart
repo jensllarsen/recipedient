@@ -8,15 +8,35 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
+            child: TextFormField(
               decoration: InputDecoration(hintText: 'Ingredents'),
+              controller: searchController,
+            ),
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: RaisedButton(
+                onPressed: () {
+                  print("Search ${searchController.text}!");
+                },
+                child: Text('Search'),
+              ),
             ),
           ),
         ],
