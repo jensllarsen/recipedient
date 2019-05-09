@@ -1,32 +1,8 @@
-// To parse this JSON data, do
-//
-//     final recipe = recipeFromJson(jsonString);
-
 import 'dart:convert';
 
-import 'ingredient.dart';
-
-Recipe recipeFromJson(String str) => Recipe.fromMap(json.decode(str));
-
-String recipeToJson(Recipe data) => json.encode(data.toMap());
+import 'package:recipedient/model/ingredient.dart';
 
 class Recipe {
-  RecipeClass recipe;
-
-  Recipe({
-    this.recipe,
-  });
-
-  factory Recipe.fromMap(Map<String, dynamic> json) => new Recipe(
-        recipe: RecipeClass.fromMap(json["recipe"]),
-      );
-
-  Map<String, dynamic> toMap() => {
-        "recipe": recipe.toMap(),
-      };
-}
-
-class RecipeClass {
   String uri;
   String label;
   String image;
@@ -40,52 +16,69 @@ class RecipeClass {
   List<String> ingredientLines;
   List<Ingredient> ingredients;
 
-  RecipeClass({
-    this.uri,
-    this.label,
-    this.image,
-    this.source,
-    this.url,
-    this.shareAs,
-    this.recipeYield,
-    this.dietLabels,
-    this.healthLabels,
-    this.cautions,
-    this.ingredientLines,
-    this.ingredients,
-  });
+  Recipe(this.uri,
+      this.label,
+      this.image,
+      this.source,
+      this.url,
+      this.shareAs,
+      this.recipeYield,
+      this.dietLabels,
+      this.healthLabels,
+      this.cautions,
+      this.ingredientLines,
+      this.ingredients,);
 
-  factory RecipeClass.fromMap(Map<String, dynamic> json) => new RecipeClass(
-        uri: json["uri"],
-        label: json["label"],
-        image: json["image"],
-        source: json["source"],
-        url: json["url"],
-        shareAs: json["shareAs"],
-        recipeYield: json["yield"],
-        dietLabels: new List<String>.from(json["dietLabels"].map((x) => x)),
-        healthLabels: new List<String>.from(json["healthLabels"].map((x) => x)),
-        cautions: new List<dynamic>.from(json["cautions"].map((x) => x)),
-        ingredientLines:
-            new List<String>.from(json["ingredientLines"].map((x) => x)),
-        ingredients: new List<Ingredient>.from(
-            json["ingredients"].map((x) => Ingredient.fromMap(x))),
-      );
 
-  Map<String, dynamic> toMap() => {
-        "uri": uri,
-        "label": label,
-        "image": image,
-        "source": source,
-        "url": url,
-        "shareAs": shareAs,
-        "yield": recipeYield,
-        "dietLabels": new List<dynamic>.from(dietLabels.map((x) => x)),
-        "healthLabels": new List<dynamic>.from(healthLabels.map((x) => x)),
-        "cautions": new List<dynamic>.from(cautions.map((x) => x)),
-        "ingredientLines":
-            new List<dynamic>.from(ingredientLines.map((x) => x)),
-        "ingredients":
-            new List<dynamic>.from(ingredients.map((x) => x.toMap())),
+  Recipe.fromJson(Map<String, dynamic> json)
+      :
+        uri=json['url'],
+        label=json['label'],
+        image=json['image'],
+        source=json['source'],
+        url=json['url'],
+        shareAs=json['shareAs'],
+        recipeYield=json['recipeYield'],
+        dietLabels=json['dietLabels'],
+        healthLabels=json['healthLabels'],
+        cautions=json['cautions'],
+        ingredientLines=json['ingredientsLines'],
+        ingredients=json['ingredients'];
+
+
+  Map<String, dynamic> toJson() =>
+      {
+        'uri': uri,
+        'label': label,
+        'image': image,
+        'source': source,
+        'url': url,
+        'shareAs': shareAs,
+        'recipeYield': recipeYield,
+        'dietLabels': dietLabels,
+        'healthLabels': healthLabels,
+        'cautions': cautions,
+        'ingredientsLines': ingredientLines,
+        'ingredients': ingredients,
       };
+}
+
+Recipe recipeFromJson(String jsonString) {
+  final jsonData = json.decode(jsonString);
+  return Recipe.fromJson(jsonData);
+}
+
+String recipeToJson(Recipe recipe) {
+  final data = recipe.toJson();
+  return json.encode(data);
+}
+
+List<Recipe> getRecipesFromJson(String jsonString) {
+  final jsonData = json.decode(jsonString);
+  return new List<Recipe>.from(jsonData.map((x) => Recipe.fromJson(x)));
+}
+
+String getJsonFromRecipes(List<Recipe> recipes) {
+  final data = new List<dynamic>.from(recipes.map((x) => x.toJson()));
+  return json.encode(data);
 }
