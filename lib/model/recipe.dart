@@ -3,6 +3,10 @@ import 'dart:convert';
 
 part 'recipe.g.dart';
 
+/// Plain class to store Recipe data.
+///
+/// Utilizes json_serializable to create to and from JSON methods in
+/// recipe.g.dart.
 @JsonSerializable()
 class Recipe {
   String uri;
@@ -37,11 +41,17 @@ class Recipe {
   Map<String, dynamic> toJson() => _$RecipeToJson(this);
 }
 
+/// Converts a JSON string, [jsonString], returned from the Edamam API to a
+/// list of Recipe objects.
+///
 List<Recipe> getRecipesFromJson(String jsonString) {
   var resultsMap = jsonDecode(jsonString);
+
+  /// Pull out the interesting data from the response contained in the hits list
   var recipeMap = resultsMap['hits'];
   List<Recipe> recipes = new List<Recipe>();
 
+  /// Loop through all the recipes, convert to objects, and add them to the list
   for (var hit in recipeMap) {
     var recipe = hit['recipe'];
     print(recipe);
