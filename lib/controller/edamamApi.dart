@@ -26,13 +26,3 @@ Future<List<Recipe>> getMatchingRecipes(String query) async {
   }
   return getRecipesFromJson(response.body);
 }
-
-List<Recipe> createEmptyRecipeList(){
-  // return an Recipe list with one empty recipe - there's probably a
-  // better way to do this??
-  var recipes = new List<Recipe>();
-  recipes.add(new Recipe(
-      "", "", "", "", "", "", 0, List<String>(),
-      List(), List(), List(), List()));
-  return recipes;
-}

@@ -61,3 +61,16 @@ List<Recipe> getRecipesFromJson(String jsonString) {
   }
   return recipes;
 }
+
+/// Return a [List<Recipe>] with one empty recipe
+///
+/// Used to handle empty queries and errors.
+/// There's probably a better way handle these cases??
+///
+List<Recipe> createEmptyRecipeList(){
+  var recipes = new List<Recipe>();
+  recipes.add(new Recipe(
+      "", "", "", "", "", "", 0, List<String>(),
+      List(), List(), List(), List()));
+  return recipes;
+}
