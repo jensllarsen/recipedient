@@ -46,12 +46,12 @@ class Recipe {
 ///
 List<Recipe> getRecipesFromJson(String jsonString) {
   var resultsMap = jsonDecode(jsonString);
-
-  /// Pull out the interesting data from the response contained in the hits list
-  var recipeMap = resultsMap['hits'];
   List<Recipe> recipes = new List<Recipe>();
 
-  /// Loop through all the recipes, convert to objects, and add them to the list
+  // Pull out the interesting data from the response contained in the hits list
+  var recipeMap = resultsMap['hits'];
+
+  // Loop through all the recipes, convert to objects, and add them to the list
   for (var hit in recipeMap) {
     var recipe = hit['recipe'];
     print(recipe);

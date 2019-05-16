@@ -9,14 +9,30 @@ final String endpoint = "https://api.edamam.com/search";
 
 // Queries the Edamam API with [query] and returns a List of Recipe objects
 //
-// Currently no error checking
 Future<List<Recipe>> getMatchingRecipes(String query) async {
-  // TODO: Add data validation and error checking
-  final String request = '$endpoint?q=$query&app_id=$app_id&app_key=$app_key';
-  try {
-    final response = await http.get(request);
-    return getRecipesFromJson(response.body);
-  } catch (e) {
-    print("Error: " + e.toString());
+  http.Response response;
+
+  if (query.isEmpty) {
+    return createEmptyRecipeList();
   }
+
+  // Otherwise get the query and convert to Recipes.
+  String request = '$endpoint?q=$query&app_id=$app_id&app_key=$app_key';
+  try {
+    response = await http.get(request);
+  } on Exception catch (e) {
+    print("Exception trying to query recipes: ${e.toString()}");
+    return createEmptyRecipeList();
+  }
+  return getRecipesFromJson(response.body);
+}
+
+List<Recipe> createEmptyRecipeList(){
+  // return an Recipe list with one empty recipe - there's probably a
+  // better way to do this??
+  var recipes = new List<Recipe>();
+  recipes.add(new Recipe(
+      "", "", "", "", "", "", 0, List<String>(),
+      List(), List(), List(), List()));
+  return recipes;
 }
