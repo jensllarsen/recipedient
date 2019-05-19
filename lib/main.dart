@@ -5,6 +5,8 @@ import 'package:recipedient/view/search.dart';
 import 'package:recipedient/view/saved.dart';
 import 'package:recipedient/view/shopping.dart';
 
+const int _NUM_TABS = 3;
+
 void main() => runApp(MainScreen());
 
 class MainScreen extends StatefulWidget {
@@ -19,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 3,
+        length: _NUM_TABS,
         child: Scaffold(
           appBar: AppBar(
             title: Text('recipedient'),

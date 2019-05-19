@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:recipedient/model/recipe.dart';
 
 /// Returns a card that displays the [recipe]
-/// 
+///
 Widget buildRecipeCard(Recipe recipe) {
   return Card(
     child: Container(
@@ -19,7 +19,11 @@ Widget buildRecipeCard(Recipe recipe) {
           ),
           Text(
             recipe.source,
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 14,
+              fontStyle: FontStyle.italic,
+            ),
           ),
           _buildIngredientLines(recipe.ingredientLines),
         ],
@@ -33,14 +37,15 @@ Widget buildRecipeCard(Recipe recipe) {
 Widget _buildIngredientLines(List<String> ingredients) {
   // TODO: Fix overflow or redesign this?
   List<Widget> chips = [];
-  print("Ingredients: ${ingredients}");
 
   for (var index = 0; index < ingredients.length; index++) {
-    var chip = Container(
-      padding: EdgeInsets.only(right: 10),
-      child: Chip(
-        label: Text(ingredients[index]),
-        backgroundColor: Colors.lightBlue,
+    var chip = Flexible(
+      child: Container(
+        padding: EdgeInsets.only(right: 3),
+        child: Chip(
+          label: Text(ingredients[index]),
+          backgroundColor: Colors.lightGreen,
+        ),
       ),
     );
     chips.add(chip);
