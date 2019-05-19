@@ -17,14 +17,15 @@ Future<List<Recipe>> getMatchingRecipes(String query) async {
   }
 
   // Otherwise get the query
-  String request = '$edamamEndpoint?q=$query&app_id=$app_id&app_key=$app_key';
+  String request = '$edamamEndpoint?q=$query&app_id=$appId&app_key=$appKey';
   try {
     response = await http.get(request);
     // check the status code
     if (response.statusCode == 200) {
       return getRecipesFromJson(response.body);
     } else {
-      throw Exception("Falied to retrive recipes! Status: ${response.statusCode}");
+      throw Exception(
+          "Falied to retrive recipes! Status: ${response.statusCode}");
     }
   } on Exception catch (e) {
     print("Exception trying to query recipes: ${e.toString()}");
