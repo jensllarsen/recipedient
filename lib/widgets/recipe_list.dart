@@ -1,25 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:recipedient/controller/edamamApi.dart';
 
 import 'package:recipedient/widgets/recipe_card.dart';
 import 'package:recipedient/model/recipe.dart';
-import 'package:recipedient/model/dummy_data.dart';
 
 class RecipeList extends StatelessWidget {
-  RecipeList() : super();
+  final String query;
 
-  final List<Recipe> recipes = getRecipes();
+  RecipeList(this.query);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        padding: EdgeInsets.all(16),
-        itemBuilder: (BuildContext _context, int index) {
-          if (index < recipes.length) {
-            return buildRecipeCard(recipes[index]);
-          }
-        },
-      ),
+    print("Looking for $query...");
+    return FutureBuilder<List<Recipe>>(
+      future: getMatchingRecipes(query),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.all(16),
+              itemBuilder: (BuildContext _context, int index) {
+                return buildRecipeCard(snapshot.data[index]);
+              },
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text("Error in FutureBuilder!");
+        } else {
+          return Container(
+            padding: EdgeInsets.all(15),
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }
