@@ -32,6 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           RaisedButton(
             child: Text("Search"),
+            onPressed: (){},
           ),
           RecipeList(),
         ],
