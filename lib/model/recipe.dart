@@ -15,7 +15,7 @@ class Recipe {
   String source;
   String url;
   String shareAs;
-  int recipeYield;
+  double recipeYield;
   List<String> dietLabels;
   List<String> healthLabels;
   List<String> cautions;
