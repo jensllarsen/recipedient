@@ -34,6 +34,8 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Text("Search"),
             onPressed: (){
               print("Search: ${searchController.text.toString()}");
+              setState(() {
+              });
             },
           ),
           RecipeList(searchController.text.toString()),
