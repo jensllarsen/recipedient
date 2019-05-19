@@ -32,7 +32,9 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           RaisedButton(
             child: Text("Search"),
-            onPressed: (){},
+            onPressed: (){
+              print("Search: ${searchController.text}");
+            },
           ),
           RecipeList(),
         ],
