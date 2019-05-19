@@ -18,9 +18,9 @@ class Recipe {
   int recipeYield;
   List<String> dietLabels;
   List<String> healthLabels;
-  List<dynamic> cautions;
+  List<String> cautions;
   List<String> ingredientLines;
-  List<dynamic> ingredients;
+  List<String> ingredients;
 
   Recipe(
       this.uri,
