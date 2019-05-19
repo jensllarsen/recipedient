@@ -7,6 +7,7 @@ part 'recipe.g.dart';
 ///
 /// Utilizes json_serializable to create to and from JSON methods in
 /// recipe.g.dart.
+///
 @JsonSerializable()
 class Recipe {
   String uri;
@@ -20,21 +21,20 @@ class Recipe {
   List<String> healthLabels;
   List<String> cautions;
   List<String> ingredientLines;
-  List<String> ingredients;
 
   Recipe(
-      this.uri,
-      this.label,
-      this.image,
-      this.source,
-      this.url,
-      this.shareAs,
-      this.recipeYield,
-      this.dietLabels,
-      this.healthLabels,
-      this.cautions,
-      this.ingredientLines,
-      this.ingredients);
+    this.uri,
+    this.label,
+    this.image,
+    this.source,
+    this.url,
+    this.shareAs,
+    this.recipeYield,
+    this.dietLabels,
+    this.healthLabels,
+    this.cautions,
+    this.ingredientLines,
+  );
 
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
 
@@ -69,7 +69,20 @@ List<Recipe> getRecipesFromJson(String jsonString) {
 ///
 List<Recipe> createEmptyRecipeList() {
   var recipes = new List<Recipe>();
-  recipes.add(new Recipe("", "", "", "", "", "", 0, List<String>(), List(),
-      List(), List(), List()));
+  recipes.add(
+    new Recipe(
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      0,
+      List<String>(),
+      List(),
+      List(),
+      List(),
+    ),
+  );
   return recipes;
 }
