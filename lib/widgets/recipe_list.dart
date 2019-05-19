@@ -11,7 +11,6 @@ class RecipeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Looking for $query...");
     return FutureBuilder<List<Recipe>>(
       future: getMatchingRecipes(query),
       builder: (context, snapshot) {

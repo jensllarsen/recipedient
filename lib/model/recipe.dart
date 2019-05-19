@@ -54,9 +54,7 @@ List<Recipe> getRecipesFromJson(String jsonString) {
   // Loop through all the recipes, convert to objects, and add them to the list
   for (var hit in recipeMap) {
     var recipe = hit['recipe'];
-    print(recipe);
     Recipe tempRecipe = _$RecipeFromJson(recipe);
-    print(tempRecipe.label);
     recipes.add(tempRecipe);
   }
   return recipes;
