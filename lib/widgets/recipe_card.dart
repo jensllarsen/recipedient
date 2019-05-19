@@ -35,16 +35,18 @@ Widget buildRecipeCard(Recipe recipe) {
 /// Builds a list of chips to display ingredients
 ///
 Widget _buildIngredientLines(List<String> ingredients) {
-  // TODO: Fix overflow or redesign this?
   List<Widget> chips = [];
 
   for (var index = 0; index < ingredients.length; index++) {
     var chip = Flexible(
       child: Container(
-        padding: EdgeInsets.only(right: 3),
+        padding: EdgeInsets.only(right: 1),
         child: Chip(
           label: Text(ingredients[index]),
-          backgroundColor: Colors.lightGreen,
+          backgroundColor: Colors.blue[600],
+          labelStyle: TextStyle(
+            fontSize: 10,
+          ),
         ),
       ),
     );
