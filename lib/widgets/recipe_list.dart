@@ -17,6 +17,7 @@ class RecipeList extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return Expanded(
             child: ListView.builder(
+              itemCount: snapshot.data.length,
               padding: EdgeInsets.all(16),
               itemBuilder: (BuildContext _context, int index) {
                 return buildRecipeCard(snapshot.data[index]);
