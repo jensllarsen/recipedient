@@ -29,7 +29,7 @@ Widget buildRecipeCard(Recipe recipe) {
               fontStyle: FontStyle.italic,
             ),
           ),
-          _buildIngredientLines(recipe.ingredientLines),
+          // _buildIngredientLines(recipe.ingredientLines),
         ],
       ),
     ),
