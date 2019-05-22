@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:recipedient/model/recipe.dart';
 
 /// Returns a card that displays the [recipe]
@@ -11,6 +10,11 @@ Widget buildRecipeCard(Recipe recipe) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          // _buildRecipeImage(recipe.image),
+          Image(
+            image: NetworkImage(recipe.image),
+            height: 100,
+          ),
           Text(
             recipe.label,
             style: TextStyle(
@@ -41,6 +45,7 @@ Widget _buildIngredientLines(List<String> ingredients) {
     var chip = Flexible(
       child: Container(
         padding: EdgeInsets.only(right: 1),
+        // TODO: Use something else besides chips - they don't look great
         child: Chip(
           label: Text(ingredients[index]),
           backgroundColor: Colors.blue[600],
