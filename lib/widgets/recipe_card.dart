@@ -29,6 +29,7 @@ Widget buildRecipeCard(Recipe recipe) {
               fontStyle: FontStyle.italic,
             ),
           ),
+          // TODO: Remove or keep ingredients on the search screen?
           // _buildIngredientLines(recipe.ingredientLines),
         ],
       ),
