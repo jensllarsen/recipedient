@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:recipedient/widgets/recipe_list.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -20,27 +19,24 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              decoration: InputDecoration(hintText: 'Ingredents'),
-              controller: searchController,
-            ),
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextFormField(
+            decoration: InputDecoration(hintText: 'Ingredents'),
+            controller: searchController,
           ),
-          RaisedButton(
-            child: Text("Search"),
-            onPressed: (){
-              print("Search: ${searchController.text.toString()}");
-              setState(() {
-              });
-            },
-          ),
-          RecipeList(searchController.text.toString()),
-        ],
-      ),
+        ),
+        RaisedButton(
+          child: Text("Search"),
+          onPressed: () {
+            print("Search: ${searchController.text.toString()}");
+            setState(() {});
+          },
+        ),
+        RecipeList(searchController.text.toString()),
+      ],
     );
   }
 }
