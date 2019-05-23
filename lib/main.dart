@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:recipedient/view/saved.dart';
 
 /// Import navigation screens
 import 'package:recipedient/view/search.dart';
-import 'package:recipedient/view/saved.dart';
 import 'package:recipedient/view/shopping.dart';
 
 const int _NUM_TABS = 3;
@@ -23,8 +23,10 @@ class _MainScreenState extends State<MainScreen> {
       home: DefaultTabController(
         length: _NUM_TABS,
         child: Scaffold(
+          backgroundColor: Colors.deepOrange,
           appBar: AppBar(
-            title: Text('recipedient'),
+            backgroundColor: Colors.green[600],
+            title: Text('Recipedient'),
             bottom: TabBar(
               tabs: [
                 Tab(text: 'Search', icon: Icon(Icons.search)),
