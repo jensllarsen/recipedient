@@ -4,6 +4,8 @@ import 'package:recipedient/model/recipe.dart';
 /// Returns a card that displays the [recipe]
 ///
 Widget buildRecipeCard(Recipe recipe) {
+  const double _IMAGE_SIZE = 150;
+
   return Card(
     child: Container(
       padding: EdgeInsets.all(15),
@@ -13,7 +15,7 @@ Widget buildRecipeCard(Recipe recipe) {
           // _buildRecipeImage(recipe.image),
           Image(
             image: NetworkImage(recipe.image),
-            height: 100,
+            height: _IMAGE_SIZE,
           ),
           Text(
             recipe.label,
