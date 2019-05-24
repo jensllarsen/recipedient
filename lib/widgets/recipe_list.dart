@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipedient/controller/edamamApi.dart';
-
-import 'package:recipedient/widgets/recipe_card.dart';
 import 'package:recipedient/model/recipe.dart';
+import 'package:recipedient/widgets/recipe_card.dart';
 
 class RecipeList extends StatelessWidget {
   final String query;
@@ -16,12 +15,15 @@ class RecipeList extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Expanded(
-            child: ListView.builder(
+            child: GridView.builder(
               itemCount: snapshot.data.length,
               padding: EdgeInsets.all(16),
               itemBuilder: (BuildContext _context, int index) {
                 return buildRecipeCard(snapshot.data[index]);
               },
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
             ),
           );
         } else if (snapshot.hasError) {
@@ -35,4 +37,29 @@ class RecipeList extends StatelessWidget {
       },
     );
   }
+//  Widget build(BuildContext context) {
+//    return FutureBuilder<List<Recipe>>(
+//      future: getMatchingRecipes(query),
+//      builder: (context, snapshot) {
+//        if (snapshot.connectionState == ConnectionState.done) {
+//          return Expanded(
+//            child: ListView.builder(
+//              itemCount: snapshot.data.length,
+//              padding: EdgeInsets.all(16),
+//              itemBuilder: (BuildContext _context, int index) {
+//                return buildRecipeCard(snapshot.data[index]);
+//              },
+//            ),
+//          );
+//        } else if (snapshot.hasError) {
+//          return Text("Error in FutureBuilder!");
+//        } else {
+//          return Container(
+//            padding: EdgeInsets.all(15),
+//            child: CircularProgressIndicator(),
+//          );
+//        }
+//      },
+//    );
+//  }
 }

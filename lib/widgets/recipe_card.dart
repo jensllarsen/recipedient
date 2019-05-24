@@ -4,7 +4,7 @@ import 'package:recipedient/model/recipe.dart';
 /// Returns a card that displays the [recipe]
 ///
 Widget buildRecipeCard(Recipe recipe) {
-  const double _IMAGE_SIZE = 150;
+  const double _IMAGE_SIZE = 100;
 
   return Card(
     child: Container(
@@ -20,14 +20,14 @@ Widget buildRecipeCard(Recipe recipe) {
           Text(
             recipe.label,
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 14,
             ),
           ),
           Text(
             recipe.source,
             style: TextStyle(
               color: Colors.grey,
-              fontSize: 14,
+              fontSize: 12,
               fontStyle: FontStyle.italic,
             ),
           ),
