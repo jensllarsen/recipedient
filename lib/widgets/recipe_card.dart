@@ -4,6 +4,7 @@ import 'package:recipedient/model/recipe.dart';
 /// Returns a card that displays the [recipe]
 ///
 Widget buildRecipeCard(Recipe recipe) {
+  // TODO: Fix card text overflow
   const double _IMAGE_SIZE = 100;
 
   return Card(
@@ -17,18 +18,22 @@ Widget buildRecipeCard(Recipe recipe) {
             image: NetworkImage(recipe.image),
             height: _IMAGE_SIZE,
           ),
-          Text(
-            recipe.label,
-            style: TextStyle(
-              fontSize: 14,
+          Flexible(
+            child: Text(
+              recipe.label,
+              style: TextStyle(
+                fontSize: 16,
+              ),
             ),
           ),
-          Text(
-            recipe.source,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 12,
-              fontStyle: FontStyle.italic,
+          Flexible(
+            child: Text(
+              recipe.source,
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ),
           // TODO: Remove or keep ingredients on the search screen?
