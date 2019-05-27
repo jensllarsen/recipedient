@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipedient/view/about.dart';
 import 'package:recipedient/view/saved.dart';
 
 /// Import navigation screens
@@ -9,14 +10,7 @@ const int _NUM_TABS = 3;
 
 void main() => runApp(MainScreen());
 
-class MainScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _MainScreenState();
-  }
-}
-
-class _MainScreenState extends State<MainScreen> {
+class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,6 +19,20 @@ class _MainScreenState extends State<MainScreen> {
         child: Scaffold(
           backgroundColor: Colors.deepOrange,
           appBar: AppBar(
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.info),
+                onPressed: () {
+                  // TODO: Fix this about screen navigation
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AboutScreen(),
+                    ),
+                  );
+                },
+              )
+            ],
             backgroundColor: Colors.green[600],
             title: Text('Recipedient'),
             bottom: TabBar(
