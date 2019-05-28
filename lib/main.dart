@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recipedient/view/about.dart';
-import 'package:recipedient/view/saved.dart';
 
 /// Import navigation screens
 import 'package:recipedient/view/search.dart';
 import 'package:recipedient/view/shopping.dart';
+import 'package:recipedient/view/saved.dart';
 
 const int _NUM_TABS = 3;
 
@@ -52,7 +52,6 @@ class MainScreen extends StatelessWidget {
           ),
         ),
       ),
-      debugShowCheckedModeBanner: false,
     );
   }
 }
