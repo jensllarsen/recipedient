@@ -10,6 +10,10 @@ class RecipeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // if the query is empty don't try to draw a card
+    if (query.isEmpty) {
+      return Container();
+    }
     return FutureBuilder<List<Recipe>>(
       future: getMatchingRecipes(query),
       builder: (context, snapshot) {
