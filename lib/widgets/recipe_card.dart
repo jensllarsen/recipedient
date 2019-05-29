@@ -7,9 +7,12 @@ Widget buildRecipeCard(Recipe recipe) {
   // TODO: Fix card text overflow
   const double _IMAGE_SIZE = 100;
 
-  return InkWell(
-    onTap: () {},
-    child: Card(
+  return Card(
+    child: InkWell(
+      splashColor: Colors.green,
+      onTap: () {
+
+      },
       child: Container(
         padding: EdgeInsets.all(15),
         child: Column(
@@ -37,37 +40,9 @@ Widget buildRecipeCard(Recipe recipe) {
                 ),
               ),
             ),
-            // TODO: Remove or keep ingredients on the search screen?
-            // _buildIngredientLines(recipe.ingredientLines),
           ],
         ),
       ),
     ),
-  );
-}
-
-/// Builds a list of chips to display ingredients
-///
-Widget _buildIngredientLines(List<String> ingredients) {
-  List<Widget> chips = [];
-
-  for (var index = 0; index < ingredients.length; index++) {
-    var chip = Flexible(
-      child: Container(
-        padding: EdgeInsets.only(right: 1),
-        // TODO: Use something else besides chips - they don't look great
-        child: Chip(
-          label: Text(ingredients[index]),
-          backgroundColor: Colors.blue[600],
-          labelStyle: TextStyle(
-            fontSize: 10,
-          ),
-        ),
-      ),
-    );
-    chips.add(chip);
-  }
-  return Row(
-    children: chips,
   );
 }

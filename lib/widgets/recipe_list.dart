@@ -18,7 +18,7 @@ class RecipeList extends StatelessWidget {
       future: getMatchingRecipes(query),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return Expanded(
+          return Flexible(
             child: GridView.builder(
               itemCount: snapshot.data.length,
               padding: EdgeInsets.all(16),
@@ -41,29 +41,4 @@ class RecipeList extends StatelessWidget {
       },
     );
   }
-//  Widget build(BuildContext context) {
-//    return FutureBuilder<List<Recipe>>(
-//      future: getMatchingRecipes(query),
-//      builder: (context, snapshot) {
-//        if (snapshot.connectionState == ConnectionState.done) {
-//          return Expanded(
-//            child: ListView.builder(
-//              itemCount: snapshot.data.length,
-//              padding: EdgeInsets.all(16),
-//              itemBuilder: (BuildContext _context, int index) {
-//                return buildRecipeCard(snapshot.data[index]);
-//              },
-//            ),
-//          );
-//        } else if (snapshot.hasError) {
-//          return Text("Error in FutureBuilder!");
-//        } else {
-//          return Container(
-//            padding: EdgeInsets.all(15),
-//            child: CircularProgressIndicator(),
-//          );
-//        }
-//      },
-//    );
-//  }
 }
