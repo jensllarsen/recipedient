@@ -14,6 +14,17 @@ class RecipeDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text("${recipe.label}"),
       ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Image.network(recipe.url),
+            Text("${recipe.source}"),
+            Text("${recipe.recipeYield}"),
+            Text("${recipe.ingredientLines}"),
+            Text("${recipe.url}"),
+          ],
+        ),
+      ),
     );
   }
 }
