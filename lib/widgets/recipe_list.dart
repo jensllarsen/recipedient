@@ -23,7 +23,7 @@ class RecipeList extends StatelessWidget {
               itemCount: snapshot.data.length,
               padding: EdgeInsets.all(16),
               itemBuilder: (BuildContext _context, int index) {
-                return buildRecipeCard(snapshot.data[index]);
+                return buildRecipeCard(snapshot.data[index], context);
               },
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,

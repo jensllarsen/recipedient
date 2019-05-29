@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recipedient/model/recipe.dart';
+import 'package:recipedient/view/recipe_detail.dart';
 
 /// Returns a card that displays the [recipe]
 ///
-Widget buildRecipeCard(Recipe recipe) {
+Widget buildRecipeCard(Recipe recipe, context) {
   // TODO: Fix card text overflow
   const double _IMAGE_SIZE = 100;
 
@@ -11,7 +12,12 @@ Widget buildRecipeCard(Recipe recipe) {
     child: InkWell(
       splashColor: Colors.green,
       onTap: () {
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RecipeDetail(recipe),
+          ),
+        );
       },
       child: Container(
         padding: EdgeInsets.all(15),
