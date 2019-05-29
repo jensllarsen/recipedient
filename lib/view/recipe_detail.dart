@@ -12,17 +12,37 @@ class RecipeDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green,
         title: Text("${recipe.label}"),
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            Image.network(recipe.url),
-            Text("${recipe.source}"),
-            Text("${recipe.recipeYield}"),
-            Text("${recipe.ingredientLines}"),
-            Text("${recipe.url}"),
-          ],
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: <Widget>[
+              Card(
+                elevation: 20,
+                child: Image.network(recipe.image),
+              ),
+              Container(
+                height: 20,
+              ),
+              Text(
+                "${recipe.source}",
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
+              Container(
+                height: 20,
+              ),
+              Text("${recipe.ingredientLines}"),
+              Text("${recipe.url}"),
+              MaterialButton(
+                color: Colors.green,
+                onPressed: () {},
+                child: Text("Save"),
+              ),
+            ],
+          ),
         ),
       ),
     );

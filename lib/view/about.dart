@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 
+/// Displays the about screen including Edamam attribution
+///
 class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
