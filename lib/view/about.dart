@@ -9,18 +9,14 @@ class AboutScreen extends StatelessWidget {
         title: Text('Recipedient'),
       ),
       body: Center(
-          child: Column(
-        children: <Widget>[
-          Text("Recipedient was written by Jens Larsen."),
-          Image.asset('resource/edamam.png'),
-          MaterialButton(
-            child: Text("Return to app"),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("Recipedient was written by Jens Larsen."),
+            Image.asset('resources/edamam.png'),
+          ],
+        ),
+      ),
     );
   }
 }
