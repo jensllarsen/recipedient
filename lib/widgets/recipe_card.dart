@@ -8,45 +8,49 @@ Widget buildRecipeCard(Recipe recipe, context) {
   // TODO: Fix card text overflow
   const double _IMAGE_SIZE = 100;
 
-  return Card(
-    child: InkWell(
-      splashColor: Colors.green,
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => RecipeDetail(recipe),
+  return Container(
+    height: 400,
+    child: Card(
+      elevation: 3,
+      child: InkWell(
+        splashColor: Colors.green,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RecipeDetail(recipe),
+            ),
+          );
+        },
+        child: Container(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Image(
+                image: NetworkImage(recipe.image),
+                height: _IMAGE_SIZE,
+              ),
+              Flexible(
+                child: Text(
+                  recipe.label,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  recipe.source,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+            ],
           ),
-        );
-      },
-      child: Container(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Image(
-              image: NetworkImage(recipe.image),
-              height: _IMAGE_SIZE,
-            ),
-            Flexible(
-              child: Text(
-                recipe.label,
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            Flexible(
-              child: Text(
-                recipe.source,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     ),
