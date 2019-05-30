@@ -13,7 +13,9 @@ void main() => runApp(MainScreen());
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomeScreenDisplay());
+    return MaterialApp(
+      home: HomeScreenDisplay(),
+    );
   }
 }
 
@@ -24,13 +26,11 @@ class HomeScreenDisplay extends StatelessWidget {
     return DefaultTabController(
       length: _NUM_TABS,
       child: Scaffold(
-        backgroundColor: Colors.deepOrange,
         appBar: AppBar(
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                // TODO: Fix this about screen navigation
                 Navigator.push(
                   context,
                   MaterialPageRoute(
