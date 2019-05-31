@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipedient/widgets/color_palette.dart';
 import 'package:recipedient/widgets/recipe_list.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -28,8 +29,12 @@ class _SearchScreenState extends State<SearchScreen> {
             controller: searchController,
           ),
         ),
-        RaisedButton(
-          child: Text("Search"),
+        MaterialButton(
+          color: lightPrimaryColor,
+          child: Text(
+            "Search",
+            style: TextStyle(color: primaryTextColor),
+          ),
           onPressed: () {
             print("Search: ${searchController.text.toString()}");
             setState(() {});

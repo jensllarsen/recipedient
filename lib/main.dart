@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:recipedient/view/about.dart';
 import 'package:recipedient/view/saved.dart';
-
-/// Import navigation screens
 import 'package:recipedient/view/search.dart';
 import 'package:recipedient/view/shopping.dart';
+import 'package:recipedient/widgets/color_palette.dart';
 
 const int _NUM_TABS = 3;
 
@@ -29,7 +28,10 @@ class HomeScreenDisplay extends StatelessWidget {
         appBar: AppBar(
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.info),
+              icon: Icon(
+                Icons.info,
+                color: lightPrimaryColor,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -40,7 +42,7 @@ class HomeScreenDisplay extends StatelessWidget {
               },
             )
           ],
-          backgroundColor: Colors.green[600],
+          backgroundColor: defaultPrimaryColor,
           title: Text('Recipedient'),
           bottom: TabBar(
             tabs: [

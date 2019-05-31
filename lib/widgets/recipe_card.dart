@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipedient/model/recipe.dart';
 import 'package:recipedient/view/recipe_detail.dart';
+import 'package:recipedient/widgets/color_palette.dart';
 
 /// Returns a card that displays the [recipe]
 ///
@@ -13,7 +14,7 @@ Widget buildRecipeCard(Recipe recipe, context) {
     child: Card(
       elevation: 3,
       child: InkWell(
-        splashColor: Colors.green,
+        splashColor: accentColor,
         onTap: () {
           Navigator.push(
             context,
@@ -35,6 +36,7 @@ Widget buildRecipeCard(Recipe recipe, context) {
                 child: Text(
                   recipe.label,
                   style: TextStyle(
+                    color: primaryTextColor,
                     fontSize: 16,
                   ),
                 ),
@@ -43,7 +45,7 @@ Widget buildRecipeCard(Recipe recipe, context) {
                 child: Text(
                   recipe.source,
                   style: TextStyle(
-                    color: Colors.grey,
+                    color: secondaryTextColor,
                     fontSize: 14,
                     fontStyle: FontStyle.italic,
                   ),

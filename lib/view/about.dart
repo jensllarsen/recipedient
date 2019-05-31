@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:recipedient/widgets/color_palette.dart';
 
 /// Displays the about screen including Edamam attribution
 ///
@@ -7,7 +8,7 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: accentColor,
         title: Text('Recipedient'),
       ),
       body: Center(

@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:recipedient/model/recipe.dart';
+import 'package:recipedient/widgets/color_palette.dart';
 
 /// Display the details of the [recipe] on a new screen
 ///
@@ -12,7 +13,7 @@ class RecipeDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: defaultPrimaryColor,
         title: Text("${recipe.label}"),
       ),
       body: Center(
@@ -37,7 +38,7 @@ class RecipeDetail extends StatelessWidget {
               Text("${recipe.ingredientLines}"),
               Text("${recipe.url}"),
               MaterialButton(
-                color: Colors.green,
+                color: accentColor,
                 onPressed: () {},
                 child: Text("Save"),
               ),
