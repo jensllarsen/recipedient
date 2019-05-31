@@ -1,5 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
+
+import 'package:json_annotation/json_annotation.dart';
 
 part 'recipe.g.dart';
 
@@ -10,6 +11,7 @@ part 'recipe.g.dart';
 ///
 @JsonSerializable()
 class Recipe {
+  int id;
   String uri;
   String label;
   String image;
@@ -23,6 +25,21 @@ class Recipe {
   List<String> ingredientLines;
 
   Recipe(
+    this.uri,
+    this.label,
+    this.image,
+    this.source,
+    this.url,
+    this.shareAs,
+    this.recipeYield,
+    this.dietLabels,
+    this.healthLabels,
+    this.cautions,
+    this.ingredientLines,
+  );
+
+  Recipe.withId(
+    this.id,
     this.uri,
     this.label,
     this.image,
