@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:recipedient/model/recipe.dart';
 import 'package:sqflite/sqflite.dart';
 
 /// [DatabaseHelper] contains helper methods on fields to work with the database
@@ -65,7 +66,7 @@ class DatabaseHelper {
         '$colHealthLabels TEXT,'
         '$colCautions TEXT,'
         '$colIngredientLines TEXT'
-        ')');
+        ');');
   }
 
   /// Creates and opens the database
@@ -77,5 +78,51 @@ class DatabaseHelper {
     Database recipeDb =
         await openDatabase(dbPath, version: 1, onCreate: _createDb);
     return recipeDb;
+  }
+
+  /// Retrieve operation. Get all Recipe objects from the database
+  ///
+  Future<List<Map<String, dynamic>>> getRecipeMapList() async {
+    Database db = await this.database;
+    List<Map<String, dynamic>> result = await db.query(recipeTableName);
+    return result;
+  }
+
+  /// Create operation. Insert a Recipe object, [recipe], into the database
+  /// Returns the inserted object ID
+  ///
+  Future<int> insertRecipe(Recipe recipe) async {
+    Database db = await this.database;
+    int result = await db.insert(recipeTableName, recipe.toJson());
+    return result;
+  }
+
+  /// Update operation. Update a Recipe object.
+  ///
+  Future<int> updateRecipe(Recipe recipe) async {
+    Database db = await this.database;
+    int result = await db.update(recipeTableName, recipe.toJson(),
+        where: '$colId=?', whereArgs: [recipe.id]);
+    return result;
+  }
+
+  /// Delete operation. Delete a Recipe object from the database
+  ///
+  Future<int> deleteRecipe(int id) async {
+    Database db = await this.database;
+    int result =
+        await db.rawDelete('DELETE FROM $recipeTableName WHERE $colId=$id');
+    return result;
+  }
+
+  /// Returns a count of the Recipes currently in the database
+  ///
+  Future<int> getNumRecipes() async {
+    Database db = await this.database;
+
+    List<Map<String, dynamic>> x =
+        await db.rawQuery('SELECT COUNT (*) FROM $recipeTableName');
+    int result = Sqflite.firstIntValue(x);
+    return result;
   }
 }
