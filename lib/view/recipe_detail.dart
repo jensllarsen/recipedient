@@ -45,7 +45,10 @@ class RecipeDetail extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: MaterialButton(
-                  child: Text("Open recipe on ${recipe.source}"),
+                  child: Text(
+                    "Open recipe on ${recipe.source}",
+                    style: TextStyle(color: textPrimaryColor),
+                  ),
                   color: accentColor,
                   onPressed: () async {
                     if (await canLaunch(recipe.url)) {
@@ -59,7 +62,10 @@ class RecipeDetail extends StatelessWidget {
               MaterialButton(
                 color: accentColor,
                 onPressed: () {},
-                child: Text("Save Recipe"),
+                child: Text(
+                  "Save Recipe",
+                  style: TextStyle(color: textPrimaryColor),
+                ),
               ),
             ],
           ),
