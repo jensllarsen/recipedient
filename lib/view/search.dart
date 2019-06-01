@@ -23,17 +23,17 @@ class _SearchScreenState extends State<SearchScreen> {
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextFormField(
+          padding: const EdgeInsets.all(16.0),
+          child: TextField(
             decoration: InputDecoration(hintText: 'Ingredents'),
             controller: searchController,
           ),
         ),
-        MaterialButton(
-          color: lightPrimaryColor,
+        RaisedButton(
+          color: accentColor,
           child: Text(
             "Search",
-            style: TextStyle(color: primaryTextColor),
+            style: TextStyle(color: textPrimaryColor),
           ),
           onPressed: () {
             print("Search: ${searchController.text.toString()}");
