@@ -14,7 +14,7 @@ class RecipeDetail extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: defaultPrimaryColor,
-        title: Text("${recipe.label}"),
+        title: Text(recipe.label),
       ),
       body: Center(
         child: Container(
@@ -29,19 +29,31 @@ class RecipeDetail extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                "${recipe.source}",
+                recipe.source,
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
               Container(
                 height: 20,
               ),
-              Text("${recipe.ingredientLines}"),
-              Text("${recipe.url}"),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: recipe.ingredientLines.length,
+                  itemBuilder: (context, position) {
+                    return Text("• ${recipe.ingredientLines[position]}");
+                  },
+                ),
+              ),
+              Text(recipe.url),
               MaterialButton(
                 color: accentColor,
                 onPressed: () {},
                 child: Text("Save"),
               ),
+              MaterialButton(
+                color: accentColor,
+                onPressed: () {},
+                child: Text("Open URL"),
+              )
             ],
           ),
         ),
