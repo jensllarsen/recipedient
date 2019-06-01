@@ -9,27 +9,30 @@ import 'package:sqflite/sqflite.dart';
 /// [DatabaseHelper] is a singleton
 ///
 class DatabaseHelper {
+  final String dbName = 'recipedient.db';
+  final int dbVersion = 1;
+
+  final String recipeTableName = 'recipe_table';
+  final String colId = 'id';
+  final String colUri = 'uri';
+  final String colLabel = 'label';
+  final String colImage = 'image';
+  final String colSource = 'source';
+  final String colUrl = 'url';
+  final String colShareAs = 'shareAs';
+  final String colRecipeYield = 'recipeYield';
+  final String colDietLabels = 'dietLabels';
+  final String colHealthLabels = 'colHealthLables';
+  final String colCautions = 'cautions';
+  final String colIngredientLines = 'ingredientLines';
+
+  DatabaseHelper._createInstance();
+
   // Singleton DatabaseHelper
   static DatabaseHelper _databaseHelper;
 
   // Local database object
   static Database _database;
-
-  DatabaseHelper._createInstance();
-
-  String recipeTableName = 'recipe_table';
-  String colId = 'id';
-  String colUri = 'uri';
-  String colLabel = 'label';
-  String colImage = 'image';
-  String colSource = 'source';
-  String colUrl = 'url';
-  String colShareAs = 'shareAs';
-  String colRecipeYield = 'recipeYield';
-  String colDietLabels = 'dietLabels';
-  String colHealthLabels = 'colHealthLables';
-  String colCautions = 'cautions';
-  String colIngredientLines = 'ingredientLines';
 
   /// factory constructor that makes sure only one instance of
   /// [_databaseHelper] is created
@@ -73,10 +76,10 @@ class DatabaseHelper {
   ///
   Future<Database> initializeDb() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String dbPath = directory.path + 'recipedient.db';
+    String dbPath = directory.path + dbName;
 
     Database recipeDb =
-        await openDatabase(dbPath, version: 1, onCreate: _createDb);
+        await openDatabase(dbPath, version: dbVersion, onCreate: _createDb);
     return recipeDb;
   }
 
