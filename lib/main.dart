@@ -45,6 +45,7 @@ class HomeScreenDisplay extends StatelessWidget {
           backgroundColor: defaultPrimaryColor,
           title: Text('Recipedient'),
           bottom: TabBar(
+            indicatorColor: accentColor,
             tabs: [
               Tab(text: 'Search', icon: Icon(Icons.search)),
               Tab(text: 'Saved', icon: Icon(Icons.save)),
