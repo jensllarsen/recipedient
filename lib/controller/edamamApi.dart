@@ -1,14 +1,11 @@
 import 'package:http/http.dart' as http;
-
-// Import Edamam API keys
 import 'package:recipedient/controller/secrets.dart';
-
 import 'package:recipedient/model/recipe.dart';
 
 final String edamamEndpoint = "https://api.edamam.com/search";
 
-// Queries the Edamam API with [query] and returns a List of Recipe objects
-//
+/// Queries the Edamam API with [query] and returns a List of Recipe objects
+///
 Future<List<Recipe>> getMatchingRecipes(String query) async {
   http.Response response;
 

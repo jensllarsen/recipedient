@@ -87,9 +87,9 @@ List<Recipe> createEmptyRecipeList() {
   recipes.add(
     new Recipe(
       "",
+      "No results returned!",
       "",
-      "",
-      "",
+      "Sorry!",
       "",
       "",
       0,
