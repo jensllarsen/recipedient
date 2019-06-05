@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:recipedient/controller/database_helper.dart';
 import 'package:recipedient/model/recipe.dart';
 import 'package:recipedient/widgets/color_palette.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -61,7 +62,9 @@ class RecipeDetail extends StatelessWidget {
               ),
               MaterialButton(
                 color: accentColor,
-                onPressed: () {},
+                onPressed: () {
+                  _saveRecipeToDatabase(recipe);
+                },
                 child: Text(
                   "Save Recipe",
                   style: TextStyle(color: textPrimaryColor),
@@ -72,5 +75,19 @@ class RecipeDetail extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _saveRecipeToDatabase(Recipe recipe) async {
+    DatabaseHelper databaseHelper = new DatabaseHelper();
+
+    int recipeId;
+
+    print('Inserting recipe: ${recipe.label}');
+    try {
+      recipeId = await databaseHelper.insertRecipe(recipe);
+    } on Exception catch (e) {
+      print('Execption inserting recipe into database: ${e.toString()}');
+    }
+    print("Inserted recipe: $recipeId");
   }
 }
