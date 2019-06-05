@@ -26,7 +26,7 @@ class _SearchScreenState extends State<SearchScreen> {
           padding: const EdgeInsets.all(16.0),
           child: TextField(
             cursorColor: accentColor,
-            decoration: InputDecoration(hintText: 'Ingredents'),
+            decoration: InputDecoration(hintText: 'Ingredients'),
             controller: searchController,
           ),
         ),
