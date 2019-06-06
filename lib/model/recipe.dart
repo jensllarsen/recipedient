@@ -12,44 +12,26 @@ part 'recipe.g.dart';
 @JsonSerializable()
 class Recipe {
   int id;
-  String uri;
   String label;
   String image;
   String source;
   String url;
-  String shareAs;
-  double recipeYield;
-  List<String> dietLabels;
-  List<String> healthLabels;
-  List<String> cautions;
   List<String> ingredientLines;
 
   Recipe(
-    this.uri,
     this.label,
     this.image,
     this.source,
     this.url,
-    this.shareAs,
-    this.recipeYield,
-    this.dietLabels,
-    this.healthLabels,
-    this.cautions,
     this.ingredientLines,
   );
 
   Recipe.withId(
     this.id,
-    this.uri,
     this.label,
     this.image,
     this.source,
     this.url,
-    this.shareAs,
-    this.recipeYield,
-    this.dietLabels,
-    this.healthLabels,
-    this.cautions,
     this.ingredientLines,
   );
 
@@ -86,16 +68,10 @@ List<Recipe> createEmptyRecipeList() {
   var recipes = new List<Recipe>();
   recipes.add(
     new Recipe(
-      "",
       "No results returned!",
       "",
       "Sorry!",
       "",
-      "",
-      0,
-      List<String>(),
-      List(),
-      List(),
       List(),
     ),
   );
