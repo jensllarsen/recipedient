@@ -65,11 +65,14 @@ List<Recipe> getRecipesFromJson(String jsonString) {
 /// There's probably a better way handle these cases??
 ///
 List<Recipe> createEmptyRecipeList() {
+  String _GENERIC_IMAGE_URL =
+      'https://cdn.pixabay.com/photo/2019/02/24/13/05/apple-icon-4017545_1280.png';
+
   var recipes = new List<Recipe>();
   recipes.add(
     new Recipe(
       "No results returned!",
-      "",
+      _GENERIC_IMAGE_URL,
       "Sorry!",
       "",
       List(),
