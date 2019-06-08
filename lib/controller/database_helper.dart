@@ -14,19 +14,32 @@ class DatabaseHelper {
 
   static const String RECIPE_TABLE_NAME = 'Recipe';
   static const String RECIPE_COL_ID = 'id';
-  static const String RECIPE_COL_URI = 'uri';
   static const String RECIPE_COL_LABEL = 'label';
   static const String RECIPE_COL_IMAGE = 'image';
   static const String RECIPE_COL_SOURCE = 'source';
-  static const String RECIPE_COL_SOURCE_URL = 'url';
-  static const String RECIPE_COL_SHARE_AS = 'shareAs';
-  static const String RECIPE_COL_RECIPE_YIELD = 'recipeYield';
-  // TODO: Add date added field
+  static const String RECIPE_COL_DATE_ADDED = 'dateAdded';
 
   static const String INGREDIENT_TABLE_NAME = 'Ingredient';
   static const String INGREDIENT_COL_ID = 'id';
   static const String INGREDIENT_ITEM = 'item';
   static const String INGREDIENT_COL_RECIPE_ID = 'recipeId';
+
+  static const String CREATE_RECIPE_TABLE = 'CREATE TABLE $RECIPE_TABLE_NAME ('
+      '$RECIPE_COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,'
+      '$RECIPE_COL_LABEL TEXT,'
+      '$RECIPE_COL_IMAGE TEXT,'
+      '$RECIPE_COL_SOURCE TEXT,'
+      '$RECIPE_COL_DATE_ADDED INTEGER'
+      ');';
+
+  static const String CREATE_INGREDIENT_TABLE =
+      'CREATE TABLE $INGREDIENT_TABLE_NAME ('
+      '$INGREDIENT_COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,'
+      '$INGREDIENT_ITEM TEXT,'
+      '$INGREDIENT_COL_RECIPE_ID INTEGER,'
+      'FOREIGN KEY ($INGREDIENT_COL_RECIPE_ID) '
+      'REFERENCES $RECIPE_TABLE_NAME($RECIPE_COL_ID)'
+      ');';
 
   DatabaseHelper._createInstance();
 
@@ -58,24 +71,11 @@ class DatabaseHelper {
   /// Runs the CREATE TABLE command
   ///
   void _createDb(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $RECIPE_TABLE_NAME ('
-        '$RECIPE_COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,'
-        '$RECIPE_COL_URI TEXT,'
-        '$RECIPE_COL_LABEL TEXT,'
-        '$RECIPE_COL_IMAGE TEXT,'
-        '$RECIPE_COL_SOURCE TEXT,'
-        '$RECIPE_COL_SOURCE_URL TEXT,'
-        '$RECIPE_COL_SHARE_AS TEXT,'
-        '$RECIPE_COL_RECIPE_YIELD REAL'
-        ');');
+    print("Creating Recipe table: $CREATE_RECIPE_TABLE");
+    print("Creating Ingredient table: $CREATE_INGREDIENT_TABLE");
 
-    await db.execute('CREATE TABLE $INGREDIENT_TABLE_NAME ('
-        '$INGREDIENT_COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,'
-        '$INGREDIENT_ITEM TEXT,'
-        '$INGREDIENT_COL_RECIPE_ID INTEGER,'
-        'FOREIGN KEY ($INGREDIENT_COL_RECIPE_ID) '
-        'REFERENCES $RECIPE_TABLE_NAME($RECIPE_COL_ID)'
-        ');');
+    await db.execute(CREATE_RECIPE_TABLE);
+    await db.execute(CREATE_INGREDIENT_TABLE);
   }
 
   /// Creates and opens the database
