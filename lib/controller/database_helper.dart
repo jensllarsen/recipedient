@@ -82,7 +82,7 @@ class DatabaseHelper {
   ///
   Future<Database> initializeDb() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String dbPath = directory.path + _DB_NAME;
+    String dbPath = directory.path + '/' + _DB_NAME;
 
     try {
       Database recipeDb =
