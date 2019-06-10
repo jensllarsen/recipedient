@@ -32,7 +32,7 @@ class DatabaseHelper {
       '$RECIPE_COL_IMAGE TEXT,'
       '$RECIPE_COL_SOURCE TEXT,'
       '$RECIPE_COL_URL,'
-      '$RECIPE_COL_DATE_ADDED INTEGER'
+      '$RECIPE_COL_DATE_ADDED TEXT'
       ');';
 
   static const String CREATE_INGREDIENT_TABLE =
@@ -44,9 +44,9 @@ class DatabaseHelper {
       'REFERENCES $RECIPE_TABLE_NAME($RECIPE_COL_ID)'
       ');';
 
-  static const String INSERT_RECIPE = 'INSERT INTO $RECIPE_TABLE_NAME ('
-      'label, image, source, url) '
-      'VALUES (?, ?, ?, ?);';
+  static const String INSERT_RECIPE =
+      'INSERT INTO $RECIPE_TABLE_NAME (label, image, source, url, dateAdded) '
+      'VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP);';
 
   DatabaseHelper._createInstance();
 
@@ -149,7 +149,7 @@ class DatabaseHelper {
     }
 
     if (recipeResult < 0) {
-      // if the insert was unsuccessful then no point continuing
+      // if the recipe insert was unsuccessful then no point continuing
       return -1;
     }
 
