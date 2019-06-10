@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:recipedient/model/ingredient.dart';
 import 'package:recipedient/model/recipe.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -17,6 +18,7 @@ class DatabaseHelper {
   static const String RECIPE_COL_LABEL = 'label';
   static const String RECIPE_COL_IMAGE = 'image';
   static const String RECIPE_COL_SOURCE = 'source';
+  static const String RECIPE_COL_URL = 'url';
   static const String RECIPE_COL_DATE_ADDED = 'dateAdded';
 
   static const String INGREDIENT_TABLE_NAME = 'Ingredient';
@@ -29,6 +31,7 @@ class DatabaseHelper {
       '$RECIPE_COL_LABEL TEXT,'
       '$RECIPE_COL_IMAGE TEXT,'
       '$RECIPE_COL_SOURCE TEXT,'
+      '$RECIPE_COL_URL,'
       '$RECIPE_COL_DATE_ADDED INTEGER'
       ');';
 
@@ -40,6 +43,10 @@ class DatabaseHelper {
       'FOREIGN KEY ($INGREDIENT_COL_RECIPE_ID) '
       'REFERENCES $RECIPE_TABLE_NAME($RECIPE_COL_ID)'
       ');';
+
+  static const String INSERT_RECIPE = 'INSERT INTO $RECIPE_TABLE_NAME ('
+      'label, image, source, url) '
+      'VALUES (?, ?, ?, ?);';
 
   DatabaseHelper._createInstance();
 
@@ -97,6 +104,7 @@ class DatabaseHelper {
   /// Retrieve all recipes operation. Get all Recipe objects from the database
   ///
   Future<List<Map<String, dynamic>>> getRecipeMapList() async {
+    // TODO: This probably needs to be refactored for manual SQL Queries
     Database db = await this.database;
     List<Map<String, dynamic>> result = await db.query(RECIPE_TABLE_NAME);
     return result;
@@ -123,21 +131,54 @@ class DatabaseHelper {
   ///
   Future<int> insertRecipe(Recipe recipe) async {
     Database db = await this.database;
-    int result = await db.insert(RECIPE_TABLE_NAME, recipe.toJson());
-    return result;
+    // int result = await db.insert(RECIPE_TABLE_NAME, recipe.toJson());
+
+    // insert the Recipe
+    print('Inserting ${recipe.label}');
+    print(INSERT_RECIPE);
+    int recipeResult;
+    try {
+      recipeResult = await db.rawInsert(INSERT_RECIPE, [
+        recipe.label,
+        recipe.image,
+        recipe.source,
+        recipe.url,
+      ]);
+    } on Exception catch (e) {
+      print('Exception inserting recipe: $e');
+    }
+
+    if (recipeResult < 0) {
+      // if the insert was unsuccessful then no point continuing
+      return -1;
+    }
+
+    // add Ingredients to database
+    for (int index = 0; index < recipe.ingredientLines.length; index++) {
+      Ingredient ingredient =
+          new Ingredient(recipe.ingredientLines[index], recipeResult);
+      try {
+        int ingredientResult = await insertIngredient(ingredient);
+        if (ingredientResult < 0) {
+          throw new Exception(
+              'Unable to insert ingredient ${recipe.ingredientLines[index]}');
+        }
+      } on Exception catch (e) {
+        print('Exception inserting ingredient: $e');
+      }
+    }
+    return recipeResult;
   }
 
   /// Create ingredient operation. Insert an ingredient, [ingredient], into the database
   /// Returns the inserted object ID
   ///
-  Future<int> insertIngredient(String ingredientString) async {
+  Future<int> insertIngredient(Ingredient ingredient) async {
     Database db = await this.database;
 
-    Map<String, dynamic> ingredient = {
-      DatabaseHelper.INGREDIENT_ITEM: ingredientString
-    };
+    Map<String, dynamic> ingredientMap = ingredient.toJson();
 
-    int result = await db.insert(INGREDIENT_TABLE_NAME, ingredient);
+    int result = await db.insert(INGREDIENT_TABLE_NAME, ingredientMap);
     return result;
   }
 
