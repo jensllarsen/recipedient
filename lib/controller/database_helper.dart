@@ -110,6 +110,19 @@ class DatabaseHelper {
     return result;
   }
 
+  /// Retrieve all recipes operation. Get all Recipe objects from the database
+  ///
+  Future<List<Recipe>> getRecipesList() async {
+    List<Map<String, dynamic>> recipeMap = await getRecipeMapList();
+    List<Recipe> recipes = new List<Recipe>();
+
+    for (int index = 0; index < recipeMap.length; index++) {
+      Recipe tempRecipe = Recipe.fromJson(recipeMap[index]);
+      recipes.add(tempRecipe);
+    }
+    return recipes;
+  }
+
   /// Retrieve ingredients operation. Retrieve all ingredients for a Recipe object.
   ///
   Future<List<String>> getIngredients(int id) async {
