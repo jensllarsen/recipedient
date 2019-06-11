@@ -1,5 +1,8 @@
 import "package:flutter/material.dart";
+import 'package:recipedient/controller/database_helper.dart';
+import 'package:recipedient/model/recipe.dart';
 import 'package:recipedient/widgets/color_palette.dart';
+import 'package:recipedient/widgets/recipe_card.dart';
 
 class SavedScreen extends StatefulWidget {
   @override
@@ -9,37 +12,30 @@ class SavedScreen extends StatefulWidget {
 }
 
 class _SavedScreenState extends State<SavedScreen> {
-  int count = 0;
+  DatabaseHelper databaseHelper = new DatabaseHelper();
+
+  List<Recipe> recipes;
 
   @override
   Widget build(BuildContext context) {
-    TextStyle titleStyle = Theme.of(context).textTheme.subhead;
-    return ListView.builder(
-      itemCount: count,
-      itemBuilder: (BuildContext context, int item) {
-        return Card(
-          color: Colors.white,
-          elevation: 2,
-          child: ListTile(
-            onTap: () {
-              debugPrint('List Item clicked!');
+    return Scaffold(
+      body: FutureBuilder<List<Recipe>>(
+        future: databaseHelper.getRecipesList(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Container();
+          }
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              return buildRecipeCard(snapshot.data[index], context);
             },
-            title: Text(
-              'Dummy title',
-              style: titleStyle,
-            ),
-            subtitle: Text('Dummy data'),
-            leading: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Image.asset('resources/bg.png'),
-            ),
-            trailing: Icon(
-              Icons.delete,
-              color: accentColor,
-            ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
