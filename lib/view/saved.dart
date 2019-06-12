@@ -27,10 +27,7 @@ class _SavedScreenState extends State<SavedScreen> {
             if (!snapshot.hasData) {
               return Container();
             }
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
+            return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 return buildRecipeCard(snapshot.data[index], context);

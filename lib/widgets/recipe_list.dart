@@ -19,15 +19,12 @@ class RecipeList extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Flexible(
-            child: GridView.builder(
+            child: ListView.builder(
               itemCount: snapshot.data.length,
               padding: EdgeInsets.all(16),
               itemBuilder: (BuildContext _context, int index) {
                 return buildRecipeCard(snapshot.data[index], context);
               },
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
             ),
           );
         } else if (snapshot.hasError) {

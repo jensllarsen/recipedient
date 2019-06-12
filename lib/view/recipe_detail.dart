@@ -80,14 +80,12 @@ class RecipeDetail extends StatelessWidget {
   void _saveRecipeToDatabase(Recipe recipe) async {
     DatabaseHelper databaseHelper = new DatabaseHelper();
 
-    int recipeId;
+    int recipeId = -1;
 
-    print('Inserting recipe: ${recipe.label}');
     try {
       recipeId = await databaseHelper.insertRecipe(recipe);
     } on Exception catch (e) {
       print('Execption inserting recipe into database: ${e.toString()}');
     }
-    print("Inserted recipe: $recipeId");
   }
 }
