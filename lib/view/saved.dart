@@ -19,22 +19,25 @@ class _SavedScreenState extends State<SavedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<Recipe>>(
-        future: databaseHelper.getRecipesList(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          }
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemCount: snapshot.data.length,
-            itemBuilder: (context, index) {
-              return buildRecipeCard(snapshot.data[index], context);
-            },
-          );
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: FutureBuilder<List<Recipe>>(
+          future: databaseHelper.getRecipesList(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Container();
+            }
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                return buildRecipeCard(snapshot.data[index], context);
+              },
+            );
+          },
+        ),
       ),
     );
   }
