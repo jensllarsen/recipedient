@@ -118,8 +118,12 @@ class DatabaseHelper {
 
     for (int index = 0; index < recipeMap.length; index++) {
       Recipe tempRecipe = Recipe.fromJson(recipeMap[index]);
+      print('Retrieved recipe ${tempRecipe.label}');
+      tempRecipe.ingredientLines = await getIngredients(tempRecipe.id);
       recipes.add(tempRecipe);
     }
+
+    // TODO: extract and insert ingredients
     return recipes;
   }
 
