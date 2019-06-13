@@ -6,12 +6,11 @@ import 'package:recipedient/widgets/color_palette.dart';
 /// Returns a card that displays the [recipe]
 ///
 Widget buildRecipeCard(Recipe recipe, context) {
-  // TODO: Fix card text overflow
-  const double _IMAGE_SIZE = 100;
-
+  print('Displaying recipe: ${recipe.label}');
   return ListTile(
     title: Text(recipe.label),
     subtitle: Text(recipe.source),
+    trailing: Icon(Icons.keyboard_arrow_right),
     leading: CircleAvatar(
       backgroundImage: NetworkImage(recipe.image),
     ),
