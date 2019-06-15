@@ -6,7 +6,6 @@ import 'package:recipedient/widgets/color_palette.dart';
 /// Returns a card that displays the [recipe]
 ///
 Widget buildRecipeCard(Recipe recipe, context) {
-  print('Displaying recipe: ${recipe.label}');
   return ListTile(
     title: Text(recipe.label),
     subtitle: Text(recipe.source),
