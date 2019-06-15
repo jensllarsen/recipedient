@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:recipedient/controller/database_helper.dart';
 import 'package:recipedient/model/recipe.dart';
 import 'package:recipedient/widgets/color_palette.dart';
+import 'package:recipedient/widgets/dialog_box.dart';
 import 'package:recipedient/widgets/display_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -39,11 +40,21 @@ class RecipeDetail extends StatelessWidget {
                     height: 20,
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: recipe.ingredientLines.length,
-                      itemBuilder: (context, position) {
-                        return Text("• ${recipe.ingredientLines[position]}");
-                      },
+                    child: Scrollbar(
+                      child: ListView.builder(
+                        itemCount: recipe.ingredientLines.length,
+                        itemBuilder: (context, position) {
+                          return ListTile(
+                            title: Text("${recipe.ingredientLines[position]}"),
+                            trailing: Icon(Icons.add),
+                            dense: true,
+                            onTap: () {
+                              choiceDialogBox(context, 'Alert',
+                                  'Add ingredient to shopping list?');
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Padding(
