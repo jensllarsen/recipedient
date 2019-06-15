@@ -75,7 +75,7 @@ class DatabaseHelper {
     return _database;
   }
 
-  /// Runs the CREATE TABLE command
+  /// Runs the CREATE TABLE commands
   ///
   void _createDb(Database db, int newVersion) async {
     await db.execute(CREATE_RECIPE_TABLE);
@@ -106,8 +106,8 @@ class DatabaseHelper {
     return result;
   }
 
-  /// Retrieve all recipes operation. Get all Recipe objects from the database
-  /// and return a list of Recipes
+  /// Retrieve all recipes operation. Get all Recipes from the database
+  /// and return a list of Recipes objects
   ///
   Future<List<Recipe>> getRecipesList() async {
     List<Map<String, dynamic>> recipeMap = await getRecipeMapList();
