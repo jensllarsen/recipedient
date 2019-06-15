@@ -31,7 +31,7 @@ class DatabaseHelper {
       '$RECIPE_COL_LABEL TEXT,'
       '$RECIPE_COL_IMAGE TEXT,'
       '$RECIPE_COL_SOURCE TEXT,'
-      '$RECIPE_COL_URL,'
+      '$RECIPE_COL_URL TEXT,'
       '$RECIPE_COL_DATE_ADDED TEXT'
       ');';
 
@@ -78,9 +78,6 @@ class DatabaseHelper {
   /// Runs the CREATE TABLE command
   ///
   void _createDb(Database db, int newVersion) async {
-    print("Creating Recipe table: $CREATE_RECIPE_TABLE");
-    print("Creating Ingredient table: $CREATE_INGREDIENT_TABLE");
-
     await db.execute(CREATE_RECIPE_TABLE);
     await db.execute(CREATE_INGREDIENT_TABLE);
   }
@@ -96,21 +93,21 @@ class DatabaseHelper {
           await openDatabase(dbPath, version: _DB_VERSION, onCreate: _createDb);
       return recipeDb;
     } catch (e) {
-      print('Unable to initialize database: $e');
+      return null;
     }
-    return null;
   }
 
   /// Retrieve all recipes operation. Get all Recipe objects from the database
+  /// as a map
   ///
   Future<List<Map<String, dynamic>>> getRecipeMapList() async {
-    // TODO: This probably needs to be refactored for manual SQL Queries
     Database db = await this.database;
     List<Map<String, dynamic>> result = await db.query(RECIPE_TABLE_NAME);
     return result;
   }
 
   /// Retrieve all recipes operation. Get all Recipe objects from the database
+  /// and return a list of Recipes
   ///
   Future<List<Recipe>> getRecipesList() async {
     List<Map<String, dynamic>> recipeMap = await getRecipeMapList();
@@ -118,12 +115,11 @@ class DatabaseHelper {
 
     for (int index = 0; index < recipeMap.length; index++) {
       Recipe tempRecipe = Recipe.fromJson(recipeMap[index]);
-      print('Retrieved recipe ${tempRecipe.label}');
-      tempRecipe.ingredientLines = await getIngredients(tempRecipe.id);
+      List<String> ingredients = new List<String>();
+      ingredients = await getIngredients(tempRecipe.id);
+      tempRecipe.ingredientLines = ingredients;
       recipes.add(tempRecipe);
     }
-
-    // TODO: extract and insert ingredients
     return recipes;
   }
 
@@ -133,7 +129,7 @@ class DatabaseHelper {
     // TODO: Fix this
     Database db = await this.database;
     List<Map<String, String>> result = await db.query(INGREDIENT_TABLE_NAME,
-        where: '$RECIPE_COL_ID=?', whereArgs: [id]);
+        where: '$INGREDIENT_COL_RECIPE_ID=?', whereArgs: [id]);
 
     List<String> ingredients;
     for (int index = 0; index < result.length; index++) {
@@ -151,8 +147,6 @@ class DatabaseHelper {
     // int result = await db.insert(RECIPE_TABLE_NAME, recipe.toJson());
 
     // insert the Recipe
-    print('Inserting ${recipe.label}');
-    print(INSERT_RECIPE);
     int recipeResult;
     try {
       recipeResult = await db.rawInsert(INSERT_RECIPE, [
@@ -161,9 +155,7 @@ class DatabaseHelper {
         recipe.source,
         recipe.url,
       ]);
-    } on Exception catch (e) {
-      print('Exception inserting recipe: $e');
-    }
+    } on Exception catch (e) {}
 
     if (recipeResult < 0) {
       // if the recipe insert was unsuccessful then no point continuing
