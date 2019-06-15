@@ -58,7 +58,8 @@ class RecipeDetail extends StatelessWidget {
                         if (await canLaunch(recipe.url)) {
                           await launch(recipe.url);
                         } else {
-                          throw 'Could not launch $recipe.url';
+                          displaySnackBar(
+                              context, 'Could not launch $recipe.url');
                         }
                       },
                     ),
