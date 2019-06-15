@@ -3,7 +3,7 @@ import 'package:recipedient/widgets/color_palette.dart';
 
 void displaySnackBar(BuildContext context, String message) {
   SnackBar snackBar = SnackBar(
-    backgroundColor: lightPrimaryColor,
+    backgroundColor: darkPrimaryColor,
     duration: Duration(seconds: 3),
     content: Text(message),
   );
