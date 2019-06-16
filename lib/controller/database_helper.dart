@@ -24,6 +24,7 @@ class DatabaseHelper {
   static const String INGREDIENT_TABLE_NAME = 'Ingredient';
   static const String INGREDIENT_COL_ID = 'id';
   static const String INGREDIENT_ITEM = 'item';
+  static const String INGREDIENT_IN_SHOPPINGLIST = 'inShoppingList';
   static const String INGREDIENT_COL_RECIPE_ID = 'recipeId';
 
   static const String CREATE_RECIPE_TABLE = 'CREATE TABLE $RECIPE_TABLE_NAME ('
@@ -39,6 +40,7 @@ class DatabaseHelper {
       'CREATE TABLE $INGREDIENT_TABLE_NAME ('
       '$INGREDIENT_COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,'
       '$INGREDIENT_ITEM TEXT,'
+      '$INGREDIENT_IN_SHOPPINGLIST INT,'
       '$INGREDIENT_COL_RECIPE_ID INTEGER,'
       'FOREIGN KEY ($INGREDIENT_COL_RECIPE_ID) '
       'REFERENCES $RECIPE_TABLE_NAME($RECIPE_COL_ID)'
@@ -137,6 +139,21 @@ class DatabaseHelper {
       ingredients.add(ingredient['item']);
     }
     return ingredients;
+  }
+
+  /// Retrieve shopping list. Retrieve all ingredients that are marked as in the list
+  Future<List<String>> getShoppingList() async {
+    Database db = await this.database;
+
+    List<Map<String, String>> result = await db.query(INGREDIENT_TABLE_NAME,
+        where: '$INGREDIENT_IN_SHOPPINGLIST=?', whereArgs: ['<0']);
+
+    List<String> shoppingList;
+    for (int index = 0; index < result.length; index++) {
+      Map<String, String> ingredient = result[index];
+      shoppingList.add(ingredient['item']);
+    }
+    return shoppingList;
   }
 
   /// Create recipe operation. Insert a Recipe object, [recipe], into the database
