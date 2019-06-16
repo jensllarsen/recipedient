@@ -214,12 +214,17 @@ class DatabaseHelper {
   ///
   Future<int> insertIngredientString(String ingredientString) async {
     Database db = await this.database;
-    // TODO: Finish this up
     // Check if this ingredient already exists in the database
+    List<Map> records = await db.rawQuery(
+        'SELECT * FROM $INGREDIENT_TABLE_NAME '
+        'WHERE $INGREDIENT_COL_ID = ?',
+        [ingredientString]);
     // If so, return the ingredientId
+    if (records.length > 0) {
+      return records[0]['id'];
+    }
     // If not, add to the database
     Ingredient ingredient = new Ingredient(ingredientString, 0);
-
     int result = await db.insert(INGREDIENT_TABLE_NAME, ingredient.toJson());
     return result;
   }
@@ -260,5 +265,23 @@ class DatabaseHelper {
         await db.rawQuery('SELECT COUNT (*) FROM $RECIPE_TABLE_NAME');
     int result = Sqflite.firstIntValue(x);
     return result;
+  }
+
+  Future<bool> addIngredientToShoppingList(int ingredientId) async {
+    if (ingredientId < 1) {
+      // invalid id
+      return false;
+    }
+    int count = await _database.rawUpdate(
+        'UPDATE $INGREDIENT_TABLE_NAME '
+        'SET $INGREDIENT_IN_SHOPPINGLIST = 1 '
+        'WHERE $INGREDIENT_COL_ID = ?',
+        [ingredientId]);
+
+    if (count < 1) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
