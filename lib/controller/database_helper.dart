@@ -23,8 +23,8 @@ class DatabaseHelper {
 
   static const String INGREDIENT_TABLE_NAME = 'Ingredient';
   static const String INGREDIENT_COL_ID = 'id';
-  static const String INGREDIENT_ITEM = 'item';
-  static const String INGREDIENT_IN_SHOPPINGLIST = 'inShoppingList';
+  static const String INGREDIENT_COL_ITEM = 'item';
+  static const String INGREDIENT_COL_IN_SHOPPINGLIST = 'inShoppingList';
   static const String INGREDIENT_COL_RECIPE_ID = 'recipeId';
 
   static const String CREATE_RECIPE_TABLE = 'CREATE TABLE $RECIPE_TABLE_NAME ('
@@ -39,8 +39,8 @@ class DatabaseHelper {
   static const String CREATE_INGREDIENT_TABLE =
       'CREATE TABLE $INGREDIENT_TABLE_NAME ('
       '$INGREDIENT_COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,'
-      '$INGREDIENT_ITEM TEXT,'
-      '$INGREDIENT_IN_SHOPPINGLIST INT,'
+      '$INGREDIENT_COL_ITEM TEXT,'
+      '$INGREDIENT_COL_IN_SHOPPINGLIST INT,'
       '$INGREDIENT_COL_RECIPE_ID INTEGER,'
       'FOREIGN KEY ($INGREDIENT_COL_RECIPE_ID) '
       'REFERENCES $RECIPE_TABLE_NAME($RECIPE_COL_ID)'
@@ -146,7 +146,7 @@ class DatabaseHelper {
     Database db = await this.database;
 
     List<Map<String, String>> result = await db.query(INGREDIENT_TABLE_NAME,
-        where: '$INGREDIENT_IN_SHOPPINGLIST=?', whereArgs: ['<0']);
+        where: '$INGREDIENT_COL_IN_SHOPPINGLIST=?', whereArgs: ['<0']);
 
     List<String> shoppingList;
     for (int index = 0; index < result.length; index++) {
@@ -164,9 +164,9 @@ class DatabaseHelper {
     // int result = await db.insert(RECIPE_TABLE_NAME, recipe.toJson());
 
     // insert the Recipe
-    int recipeResult;
+    int recipeId;
     try {
-      recipeResult = await db.rawInsert(INSERT_RECIPE, [
+      recipeId = await db.rawInsert(INSERT_RECIPE, [
         recipe.label,
         recipe.image,
         recipe.source,
@@ -174,29 +174,20 @@ class DatabaseHelper {
       ]);
     } on Exception catch (e) {}
 
-    if (recipeResult < 0) {
+    if (recipeId < 0) {
       // if the recipe insert was unsuccessful then no point continuing
       return -1;
     }
 
     // add Ingredients to database
     for (int index = 0; index < recipe.ingredientLines.length; index++) {
-      Ingredient ingredient =
-          new Ingredient(recipe.ingredientLines[index], recipeResult);
-      try {
-        int ingredientResult = await insertIngredient(ingredient);
-        if (ingredientResult < 0) {
-          throw new Exception(
-              'Unable to insert ingredient ${recipe.ingredientLines[index]}');
-        }
-      } on Exception catch (e) {
-        print('Exception inserting ingredient: $e');
-      }
+      insertIngredientString(recipe.ingredientLines[index], recipeId);
     }
-    return recipeResult;
+    return recipeId;
   }
 
-  /// Create ingredient operation. Insert an ingredient, [ingredient], into the database
+  /// Create ingredient operation. Insert an ingredient object, [ingredient],
+  /// into the database
   /// Returns the inserted object ID
   ///
   Future<int> insertIngredient(Ingredient ingredient) async {
@@ -209,22 +200,24 @@ class DatabaseHelper {
   }
 
   /// Create ingredient operation. Insert an ingredient string, [ingredientString],
-  /// into the database
+  /// into the database. Optional [recipeId], defaults to 0 if no value is provided
   /// Returns the inserted object ID
   ///
-  Future<int> insertIngredientString(String ingredientString) async {
+  Future<int> insertIngredientString(String ingredientString,
+      [int recipeId = 0]) async {
     Database db = await this.database;
     // Check if this ingredient already exists in the database
+    // TODO: Fix this - inserts duplicates if an ingredient already is in the db
     List<Map> records = await db.rawQuery(
         'SELECT * FROM $INGREDIENT_TABLE_NAME '
-        'WHERE $INGREDIENT_COL_ID = ?',
+        'WHERE $INGREDIENT_COL_ITEM = ?',
         [ingredientString]);
     // If so, return the ingredientId
     if (records.length > 0) {
       return records[0]['id'];
     }
     // If not, add to the database
-    Ingredient ingredient = new Ingredient(ingredientString, 0);
+    Ingredient ingredient = new Ingredient(ingredientString, recipeId);
     int result = await db.insert(INGREDIENT_TABLE_NAME, ingredient.toJson());
     return result;
   }
@@ -274,7 +267,7 @@ class DatabaseHelper {
     }
     int count = await _database.rawUpdate(
         'UPDATE $INGREDIENT_TABLE_NAME '
-        'SET $INGREDIENT_IN_SHOPPINGLIST = 1 '
+        'SET $INGREDIENT_COL_IN_SHOPPINGLIST = 1 '
         'WHERE $INGREDIENT_COL_ID = ?',
         [ingredientId]);
 
