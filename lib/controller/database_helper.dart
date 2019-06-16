@@ -208,6 +208,22 @@ class DatabaseHelper {
     return result;
   }
 
+  /// Create ingredient operation. Insert an ingredient string, [ingredientString],
+  /// into the database
+  /// Returns the inserted object ID
+  ///
+  Future<int> insertIngredientString(String ingredientString) async {
+    Database db = await this.database;
+    // TODO: Finish this up
+    // Check if this ingredient already exists in the database
+    // If so, return the ingredientId
+    // If not, add to the database
+    Ingredient ingredient = new Ingredient(ingredientString, 0);
+
+    int result = await db.insert(INGREDIENT_TABLE_NAME, ingredient.toJson());
+    return result;
+  }
+
   /// Update recipe operation. Update a Recipe object.
   ///
   Future<int> updateRecipe(Recipe recipe) async {
