@@ -46,11 +46,14 @@ class RecipeDetail extends StatelessWidget {
                         itemBuilder: (context, position) {
                           return ListTile(
                             title: Text("${recipe.ingredientLines[position]}"),
-                            trailing: Icon(Icons.add),
+                            trailing: Icon(Icons.shopping_basket),
                             dense: true,
                             onTap: () {
-                              choiceDialogBox(context, 'Alert',
-                                  'Add ingredient to shopping list?');
+                              addIngredientDialogBox(
+                                  context,
+                                  'Alert',
+                                  'Add ingredient to shopping list?',
+                                  recipe.ingredientLines[position]);
                             },
                           );
                         },
