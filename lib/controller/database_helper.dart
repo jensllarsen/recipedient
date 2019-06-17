@@ -262,20 +262,34 @@ class DatabaseHelper {
     }
   }
 
+  Future<bool> removeIngredientFromShoppingList(int ingredientId) async {
+    if (ingredientId < 1) {
+      // invalid id
+      return false;
+    }
+    int count = await _database.rawUpdate(
+        'UPDATE $INGREDIENT_TABLE_NAME '
+        'SET $INGREDIENT_COL_IN_SHOPPINGLIST = 0 '
+        'WHERE $INGREDIENT_COL_ID = ?',
+        [ingredientId]);
+
+    if (count < 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   /// Retrieve shopping list. Retrieve all ingredients that are marked as in the list
   Future<List<Ingredient>> getShoppingList() async {
-    print('Getting refrence to database...');
     Database db = await this.database;
-    print('Getting shopping list from database...');
     List<Ingredient> shoppingList = new List<Ingredient>();
     List<Map<String, dynamic>> result = await db.rawQuery(
         'SELECT * FROM $INGREDIENT_TABLE_NAME WHERE $INGREDIENT_COL_IN_SHOPPINGLIST > 0;');
-    print('Adding ingredients to list...');
     for (int index = 0; index < result.length; index++) {
       Ingredient tempIngredient = Ingredient.fromJson(result[index]);
       shoppingList.add(tempIngredient);
     }
-    print('Shopping list: $shoppingList');
     return shoppingList;
   }
 }
