@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:recipedient/controller/database_helper.dart';
 import 'package:recipedient/model/ingredient.dart';
+import 'package:recipedient/widgets/color_palette.dart';
+import 'package:recipedient/widgets/dialog_box.dart';
 
 class ShoppingScreen extends StatefulWidget {
   @override
@@ -23,15 +25,33 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
             if (snapshot.connectionState == ConnectionState.done) {
               return Column(
                 children: <Widget>[
+                  RaisedButton(
+                    color: accentColor,
+                    child: Text(
+                      'Share shopping list',
+                      style: TextStyle(color: textPrimaryColor),
+                    ),
+                    onPressed: () {
+                      // TODO: Open share menu
+                    },
+                  ),
                   Flexible(
-                    child: ListView.builder(
-                      itemCount: snapshot.data.length,
-                      padding: EdgeInsets.all(16),
-                      itemBuilder: (BuildContext _context, int index) {
-                        return ListTile(
-                          title: Text(snapshot.data[index].item),
-                        );
-                      },
+                    // TODO: fix list not updating when item is deleted
+                    child: Scrollbar(
+                      child: ListView.builder(
+                        itemCount: snapshot.data.length,
+                        padding: EdgeInsets.all(16),
+                        itemBuilder: (BuildContext _context, int index) {
+                          return ListTile(
+                            trailing: Icon(Icons.delete),
+                            onTap: () {
+                              removeFromShoppingListDialogBox(
+                                  context, snapshot.data[index].id);
+                            },
+                            title: Text(snapshot.data[index].item),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],

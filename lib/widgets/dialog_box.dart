@@ -53,3 +53,33 @@ void addIngredientDialogBox(
     },
   );
 }
+
+void removeFromShoppingListDialogBox(BuildContext context, int ingredientId) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: textPrimaryColor,
+        title: Text('Alert'),
+        content: Text('Remove from shopping list?'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Yes"),
+            onPressed: () async {
+              // TODO: remove ingredient from the shopping list
+              DatabaseHelper databaseHelper = new DatabaseHelper();
+              databaseHelper.removeIngredientToShoppingList(ingredientId);
+              Navigator.of(context).pop();
+            },
+          ),
+          FlatButton(
+            child: Text("No"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
