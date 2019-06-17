@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipedient/model/recipe.dart';
 import 'package:recipedient/view/recipe_detail.dart';
-import 'package:recipedient/widgets/color_palette.dart';
 
 /// Returns a card that displays the [recipe]
 ///
