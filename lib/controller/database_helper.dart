@@ -141,21 +141,6 @@ class DatabaseHelper {
     return ingredients;
   }
 
-  /// Retrieve shopping list. Retrieve all ingredients that are marked as in the list
-  Future<List<String>> getShoppingList() async {
-    Database db = await this.database;
-
-    List<Map<String, String>> result = await db.query(INGREDIENT_TABLE_NAME,
-        where: '$INGREDIENT_COL_IN_SHOPPINGLIST=?', whereArgs: ['<0']);
-
-    List<String> shoppingList;
-    for (int index = 0; index < result.length; index++) {
-      Map<String, String> ingredient = result[index];
-      shoppingList.add(ingredient['item']);
-    }
-    return shoppingList;
-  }
-
   /// Create recipe operation. Insert a Recipe object, [recipe], into the database
   /// Returns the inserted object ID
   ///
@@ -207,7 +192,6 @@ class DatabaseHelper {
       [int recipeId = 0]) async {
     Database db = await this.database;
     // Check if this ingredient already exists in the database
-    // TODO: Fix this - inserts duplicates if an ingredient already is in the db
     List<Map> records = await db.rawQuery(
         'SELECT * FROM $INGREDIENT_TABLE_NAME '
         'WHERE $INGREDIENT_COL_ITEM = ?',
@@ -276,5 +260,22 @@ class DatabaseHelper {
     } else {
       return true;
     }
+  }
+
+  /// Retrieve shopping list. Retrieve all ingredients that are marked as in the list
+  Future<List<Ingredient>> getShoppingList() async {
+    print('Getting refrence to database...');
+    Database db = await this.database;
+    print('Getting shopping list from database...');
+    List<Ingredient> shoppingList = new List<Ingredient>();
+    List<Map<String, dynamic>> result = await db.rawQuery(
+        'SELECT * FROM $INGREDIENT_TABLE_NAME WHERE $INGREDIENT_COL_IN_SHOPPINGLIST > 0;');
+    print('Adding ingredients to list...');
+    for (int index = 0; index < result.length; index++) {
+      Ingredient tempIngredient = Ingredient.fromJson(result[index]);
+      shoppingList.add(tempIngredient);
+    }
+    print('Shopping list: $shoppingList');
+    return shoppingList;
   }
 }
