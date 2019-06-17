@@ -68,7 +68,7 @@ void removeFromShoppingListDialogBox(BuildContext context, int ingredientId) {
             onPressed: () async {
               // TODO: remove ingredient from the shopping list
               DatabaseHelper databaseHelper = new DatabaseHelper();
-              databaseHelper.removeIngredientToShoppingList(ingredientId);
+              databaseHelper.removeIngredientFromShoppingList(ingredientId);
               Navigator.of(context).pop();
             },
           ),
