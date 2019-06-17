@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:recipedient/controller/database_helper.dart';
 import 'package:recipedient/model/recipe.dart';
-import 'package:recipedient/widgets/color_palette.dart';
 import 'package:recipedient/widgets/recipe_card.dart';
 
 class SavedScreen extends StatefulWidget {
