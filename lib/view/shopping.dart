@@ -33,7 +33,6 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                       style: TextStyle(color: textPrimaryColor),
                     ),
                     onPressed: () async {
-                      // TODO: Create list of items
                       String shoppingList =
                           await databaseHelper.getShoppingListAsStrings();
                       Share.share(shoppingList);
