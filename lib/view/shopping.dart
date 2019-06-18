@@ -3,6 +3,7 @@ import 'package:recipedient/controller/database_helper.dart';
 import 'package:recipedient/model/ingredient.dart';
 import 'package:recipedient/widgets/color_palette.dart';
 import 'package:recipedient/widgets/dialog_box.dart';
+import 'package:share/share.dart';
 
 class ShoppingScreen extends StatefulWidget {
   @override
@@ -31,8 +32,11 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                       'Share shopping list',
                       style: TextStyle(color: textPrimaryColor),
                     ),
-                    onPressed: () {
-                      // TODO: Open share menu
+                    onPressed: () async {
+                      // TODO: Create list of items
+                      String shoppingList =
+                          await databaseHelper.getShoppingListAsStrings();
+                      Share.share(shoppingList);
                     },
                   ),
                   Flexible(
