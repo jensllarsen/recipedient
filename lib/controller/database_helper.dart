@@ -128,15 +128,13 @@ class DatabaseHelper {
   /// Retrieve ingredients operation. Retrieve all ingredients for a Recipe object.
   ///
   Future<List<String>> getIngredients(int id) async {
-    // TODO: Fix this
     Database db = await this.database;
-    List<Map<String, String>> result = await db.query(INGREDIENT_TABLE_NAME,
-        where: '$INGREDIENT_COL_RECIPE_ID=?', whereArgs: [id]);
-
-    List<String> ingredients;
+    List<Map<String, dynamic>> result = await db.query(INGREDIENT_TABLE_NAME,
+        where: '$INGREDIENT_COL_RECIPE_ID = ?', whereArgs: [id]);
+    List<String> ingredients = new List<String>();
     for (int index = 0; index < result.length; index++) {
-      Map<String, String> ingredient = result[index];
-      ingredients.add(ingredient['item']);
+      Map<String, dynamic> ingredient = result[index];
+      ingredients.add(ingredient["item"]);
     }
     return ingredients;
   }
