@@ -20,53 +20,61 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: FutureBuilder<List<Ingredient>>(
-          future: databaseHelper.getShoppingList(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Column(
-                children: <Widget>[
-                  RaisedButton(
-                    color: accentColor,
-                    child: Text(
-                      'Share shopping list',
-                      style: TextStyle(color: textPrimaryColor),
-                    ),
-                    onPressed: () async {
-                      String shoppingList =
-                          await databaseHelper.getShoppingListAsStrings();
-                      Share.share(shoppingList);
-                    },
-                  ),
-                  Flexible(
-                    // TODO: fix list not updating when item is deleted
-                    child: Scrollbar(
-                      child: ListView.builder(
-                        itemCount: snapshot.data.length,
-                        padding: EdgeInsets.all(16),
-                        itemBuilder: (BuildContext _context, int index) {
-                          return ListTile(
-                            trailing: Icon(Icons.delete),
-                            onTap: () {
-                              removeFromShoppingListDialogBox(
-                                  context, snapshot.data[index].id);
-                            },
-                            title: Text(snapshot.data[index].item),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text("Error in FutureBuilder!");
-            } else {
-              return Container(
-                padding: EdgeInsets.all(15),
-                child: CircularProgressIndicator(),
-              );
-            }
+        child: Column(
+          children: <Widget>[
+            Center(
+              child: shareButton(),
+            ),
+            FutureBuilder<List<Ingredient>>(
+                future: databaseHelper.getShoppingList(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return displayShoppingList(snapshot);
+                  } else if (snapshot.hasError) {
+                    return Text('Error in FutureBuilder');
+                  } else {
+                    return Container(
+                      padding: EdgeInsets.all(15),
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget shareButton() {
+    return RaisedButton(
+      color: accentColor,
+      child: Text(
+        'Share shopping list',
+        style: TextStyle(color: textPrimaryColor),
+      ),
+      onPressed: () async {
+        String shoppingList = await databaseHelper.getShoppingListAsStrings();
+        Share.share(shoppingList);
+      },
+    );
+  }
+
+  Widget displayShoppingList(shoppingList) {
+    return Flexible(
+      // TODO: fix list not updating when item is deleted
+      child: Scrollbar(
+        child: ListView.builder(
+          itemCount: shoppingList.data.length,
+          padding: EdgeInsets.all(16),
+          itemBuilder: (BuildContext _context, int index) {
+            return ListTile(
+              trailing: Icon(Icons.delete),
+              title: Text(shoppingList.data[index].item),
+              onTap: () {
+                removeFromShoppingListDialogBox(
+                    context, shoppingList.data[index].id);
+              },
+            );
           },
         ),
       ),
