@@ -169,19 +169,6 @@ class DatabaseHelper {
     return recipeId;
   }
 
-  /// Create ingredient operation. Insert an ingredient object, [ingredient],
-  /// into the database
-  /// Returns the inserted object ID
-  ///
-  Future<int> insertIngredient(Ingredient ingredient) async {
-    Database db = await this.database;
-
-    Map<String, dynamic> ingredientMap = ingredient.toJson();
-
-    int result = await db.insert(INGREDIENT_TABLE_NAME, ingredientMap);
-    return result;
-  }
-
   /// Create ingredient operation. Insert an ingredient string, [ingredientString],
   /// into the database. Optional [recipeId], defaults to 0 if no value is provided
   /// Returns the inserted object ID
@@ -204,15 +191,6 @@ class DatabaseHelper {
     return result;
   }
 
-  /// Update recipe operation. Update a Recipe object.
-  ///
-  Future<int> updateRecipe(Recipe recipe) async {
-    Database db = await this.database;
-    int result = await db.update(RECIPE_TABLE_NAME, recipe.toJson(),
-        where: '$RECIPE_COL_ID=?', whereArgs: [recipe.id]);
-    return result;
-  }
-
   /// Delete recipe operation. Delete a Recipe object from the database
   ///
   Future<int> deleteRecipe(int id) async {
@@ -228,17 +206,6 @@ class DatabaseHelper {
     Database db = await this.database;
     int result = await db.rawDelete(
         'DELETE FROM $INGREDIENT_TABLE_NAME WHERE $INGREDIENT_COL_ID=$id');
-    return result;
-  }
-
-  /// Returns a count of the Recipes currently in the database
-  ///
-  Future<int> getNumRecipes() async {
-    Database db = await this.database;
-
-    List<Map<String, dynamic>> x =
-        await db.rawQuery('SELECT COUNT (*) FROM $RECIPE_TABLE_NAME');
-    int result = Sqflite.firstIntValue(x);
     return result;
   }
 
