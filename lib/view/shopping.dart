@@ -13,7 +13,7 @@ class ShoppingScreen extends StatefulWidget {
 }
 
 class _ShoppingScreenState extends State<ShoppingScreen> {
-  DatabaseHelper databaseHelper = new DatabaseHelper();
+  DatabaseHelper _databaseHelper = new DatabaseHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
               child: shareButton(),
             ),
             FutureBuilder<List<Ingredient>>(
-                future: databaseHelper.getShoppingList(),
+                future: _databaseHelper.getShoppingList(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return displayShoppingList(snapshot);
@@ -53,7 +53,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
         style: TextStyle(color: PRIMARY_COLOR_TEXT),
       ),
       onPressed: () async {
-        String shoppingList = await databaseHelper.getShoppingListAsString();
+        String shoppingList = await _databaseHelper.getShoppingListAsString();
         Share.share(shoppingList);
       },
     );
