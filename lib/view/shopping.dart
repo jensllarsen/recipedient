@@ -23,13 +23,13 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
         child: Column(
           children: <Widget>[
             Center(
-              child: shareButton(),
+              child: _shareButton(),
             ),
             FutureBuilder<List<Ingredient>>(
                 future: _databaseHelper.getShoppingList(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return displayShoppingList(snapshot);
+                    return _displayShoppingList(snapshot);
                   } else if (snapshot.hasError) {
                     return Text('Error in FutureBuilder');
                   } else {
@@ -45,7 +45,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
     );
   }
 
-  Widget shareButton() {
+  Widget _shareButton() {
     return RaisedButton(
       color: ACCENT_COLOR,
       child: Text(
@@ -59,7 +59,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
     );
   }
 
-  Widget displayShoppingList(AsyncSnapshot shoppingList) {
+  Widget _displayShoppingList(AsyncSnapshot shoppingList) {
     return Flexible(
       // TODO: fix list not updating when item is deleted
       child: Scrollbar(
