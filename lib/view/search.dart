@@ -11,13 +11,13 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   String _query = "";
 
   @override
   void dispose() {
-    searchController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -32,12 +32,12 @@ class _SearchScreenState extends State<SearchScreen> {
               child: TextField(
                 cursorColor: ACCENT_COLOR,
                 decoration: InputDecoration(hintText: 'Ingredients'),
-                controller: searchController,
+                controller: _searchController,
                 onSubmitted: (String value) {
                   setState(() {
-                    _query = searchController.text.toString();
+                    _query = _searchController.text.toString();
                   });
-                  return searchController.text.toString();
+                  return _searchController.text.toString();
                 },
               ),
             ),
@@ -49,9 +49,9 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               onPressed: () {
                 displaySnackBar(
-                    context, "Searching: ${searchController.text.toString()}");
+                    context, "Searching: ${_searchController.text.toString()}");
                 setState(() {
-                  _query = searchController.text.toString();
+                  _query = _searchController.text.toString();
                 });
               },
             ),
