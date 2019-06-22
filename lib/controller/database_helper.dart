@@ -13,41 +13,42 @@ class DatabaseHelper {
   static const String _DB_NAME = 'recipedient.db';
   static const int _DB_VERSION = 1;
 
-  static const String RECIPE_TABLE_NAME = 'Recipe';
-  static const String RECIPE_COL_ID = 'id';
-  static const String RECIPE_COL_LABEL = 'label';
-  static const String RECIPE_COL_IMAGE = 'image';
-  static const String RECIPE_COL_SOURCE = 'source';
-  static const String RECIPE_COL_URL = 'url';
-  static const String RECIPE_COL_DATE_ADDED = 'dateAdded';
+  static const String _RECIPE_TABLE_NAME = 'Recipe';
+  static const String _RECIPE_COL_ID = 'id';
+  static const String _RECIPE_COL_LABEL = 'label';
+  static const String _RECIPE_COL_IMAGE = 'image';
+  static const String _RECIPE_COL_SOURCE = 'source';
+  static const String _RECIPE_COL_URL = 'url';
+  static const String _RECIPE_COL_DATE_ADDED = 'dateAdded';
 
-  static const String INGREDIENT_TABLE_NAME = 'Ingredient';
-  static const String INGREDIENT_COL_ID = 'id';
-  static const String INGREDIENT_COL_ITEM = 'item';
-  static const String INGREDIENT_COL_IN_SHOPPINGLIST = 'inShoppingList';
-  static const String INGREDIENT_COL_RECIPE_ID = 'recipeId';
+  static const String _INGREDIENT_TABLE_NAME = 'Ingredient';
+  static const String _INGREDIENT_COL_ID = 'id';
+  static const String _INGREDIENT_COL_ITEM = 'item';
+  static const String _INGREDIENT_COL_IN_SHOPPINGLIST = 'inShoppingList';
+  static const String _INGREDIENT_COL_RECIPE_ID = 'recipeId';
 
-  static const String CREATE_RECIPE_TABLE = 'CREATE TABLE $RECIPE_TABLE_NAME ('
-      '$RECIPE_COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,'
-      '$RECIPE_COL_LABEL TEXT,'
-      '$RECIPE_COL_IMAGE TEXT,'
-      '$RECIPE_COL_SOURCE TEXT,'
-      '$RECIPE_COL_URL TEXT,'
-      '$RECIPE_COL_DATE_ADDED TEXT'
+  static const String _CREATE_RECIPE_TABLE =
+      'CREATE TABLE $_RECIPE_TABLE_NAME ('
+      '$_RECIPE_COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,'
+      '$_RECIPE_COL_LABEL TEXT,'
+      '$_RECIPE_COL_IMAGE TEXT,'
+      '$_RECIPE_COL_SOURCE TEXT,'
+      '$_RECIPE_COL_URL TEXT,'
+      '$_RECIPE_COL_DATE_ADDED TEXT'
       ');';
 
-  static const String CREATE_INGREDIENT_TABLE =
-      'CREATE TABLE $INGREDIENT_TABLE_NAME ('
-      '$INGREDIENT_COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,'
-      '$INGREDIENT_COL_ITEM TEXT,'
-      '$INGREDIENT_COL_IN_SHOPPINGLIST INT,'
-      '$INGREDIENT_COL_RECIPE_ID INTEGER,'
-      'FOREIGN KEY ($INGREDIENT_COL_RECIPE_ID) '
-      'REFERENCES $RECIPE_TABLE_NAME($RECIPE_COL_ID)'
+  static const String _CREATE_INGREDIENT_TABLE =
+      'CREATE TABLE $_INGREDIENT_TABLE_NAME ('
+      '$_INGREDIENT_COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,'
+      '$_INGREDIENT_COL_ITEM TEXT,'
+      '$_INGREDIENT_COL_IN_SHOPPINGLIST INT,'
+      '$_INGREDIENT_COL_RECIPE_ID INTEGER,'
+      'FOREIGN KEY ($_INGREDIENT_COL_RECIPE_ID) '
+      'REFERENCES $_RECIPE_TABLE_NAME($_RECIPE_COL_ID)'
       ');';
 
-  static const String INSERT_RECIPE =
-      'INSERT INTO $RECIPE_TABLE_NAME (label, image, source, url, dateAdded) '
+  static const String _INSERT_RECIPE =
+      'INSERT INTO $_RECIPE_TABLE_NAME (label, image, source, url, dateAdded) '
       'VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP);';
 
   DatabaseHelper._createInstance();
@@ -72,7 +73,7 @@ class DatabaseHelper {
   ///
   Future<Database> get database async {
     if (_database == null) {
-      _database = await initializeDb();
+      _database = await _initializeDb();
     }
     return _database;
   }
@@ -80,13 +81,13 @@ class DatabaseHelper {
   /// Runs the CREATE TABLE commands
   ///
   void _createDb(Database db, int newVersion) async {
-    await db.execute(CREATE_RECIPE_TABLE);
-    await db.execute(CREATE_INGREDIENT_TABLE);
+    await db.execute(_CREATE_RECIPE_TABLE);
+    await db.execute(_CREATE_INGREDIENT_TABLE);
   }
 
   /// Creates and opens the database
   ///
-  Future<Database> initializeDb() async {
+  Future<Database> _initializeDb() async {
     Directory directory = await getApplicationDocumentsDirectory();
     String dbPath = directory.path + '/' + _DB_NAME;
 
@@ -104,7 +105,7 @@ class DatabaseHelper {
   ///
   Future<List<Map<String, dynamic>>> getRecipeMapList() async {
     Database db = await this.database;
-    List<Map<String, dynamic>> result = await db.query(RECIPE_TABLE_NAME);
+    List<Map<String, dynamic>> result = await db.query(_RECIPE_TABLE_NAME);
     return result;
   }
 
@@ -129,8 +130,8 @@ class DatabaseHelper {
   ///
   Future<List<String>> getIngredients(int recipeId) async {
     Database db = await this.database;
-    List<Map<String, dynamic>> result = await db.query(INGREDIENT_TABLE_NAME,
-        where: '$INGREDIENT_COL_RECIPE_ID = ?', whereArgs: [recipeId]);
+    List<Map<String, dynamic>> result = await db.query(_INGREDIENT_TABLE_NAME,
+        where: '$_INGREDIENT_COL_RECIPE_ID = ?', whereArgs: [recipeId]);
     List<String> ingredients = new List<String>();
     for (int index = 0; index < result.length; index++) {
       Map<String, dynamic> ingredient = result[index];
@@ -149,7 +150,7 @@ class DatabaseHelper {
     // insert the Recipe
     int recipeId;
     try {
-      recipeId = await db.rawInsert(INSERT_RECIPE, [
+      recipeId = await db.rawInsert(_INSERT_RECIPE, [
         recipe.label,
         recipe.image,
         recipe.source,
@@ -178,8 +179,8 @@ class DatabaseHelper {
     Database db = await this.database;
     // Check if this ingredient already exists in the database
     List<Map> records = await db.rawQuery(
-        'SELECT * FROM $INGREDIENT_TABLE_NAME '
-        'WHERE $INGREDIENT_COL_ITEM = ?',
+        'SELECT * FROM $_INGREDIENT_TABLE_NAME '
+        'WHERE $_INGREDIENT_COL_ITEM = ?',
         [ingredientString]);
     // If so, return the ingredientId
     if (records.length > 0) {
@@ -187,7 +188,7 @@ class DatabaseHelper {
     }
     // If not, add to the database
     Ingredient ingredient = new Ingredient(ingredientString, recipeId);
-    int result = await db.insert(INGREDIENT_TABLE_NAME, ingredient.toJson());
+    int result = await db.insert(_INGREDIENT_TABLE_NAME, ingredient.toJson());
     return result;
   }
 
@@ -196,7 +197,7 @@ class DatabaseHelper {
   Future<int> deleteRecipe(int id) async {
     Database db = await this.database;
     int result = await db
-        .rawDelete('DELETE FROM $RECIPE_TABLE_NAME WHERE $RECIPE_COL_ID=$id');
+        .rawDelete('DELETE FROM $_RECIPE_TABLE_NAME WHERE $_RECIPE_COL_ID=$id');
     return result;
   }
 
@@ -205,7 +206,7 @@ class DatabaseHelper {
   Future<int> deleteIngredient(int id) async {
     Database db = await this.database;
     int result = await db.rawDelete(
-        'DELETE FROM $INGREDIENT_TABLE_NAME WHERE $INGREDIENT_COL_ID=$id');
+        'DELETE FROM $_INGREDIENT_TABLE_NAME WHERE $_INGREDIENT_COL_ID=$id');
     return result;
   }
 
@@ -215,9 +216,9 @@ class DatabaseHelper {
       return false;
     }
     int count = await _database.rawUpdate(
-        'UPDATE $INGREDIENT_TABLE_NAME '
-        'SET $INGREDIENT_COL_IN_SHOPPINGLIST = 1 '
-        'WHERE $INGREDIENT_COL_ID = ?',
+        'UPDATE $_INGREDIENT_TABLE_NAME '
+        'SET $_INGREDIENT_COL_IN_SHOPPINGLIST = 1 '
+        'WHERE $_INGREDIENT_COL_ID = ?',
         [ingredientId]);
 
     if (count < 1) {
@@ -233,9 +234,9 @@ class DatabaseHelper {
       return false;
     }
     int count = await _database.rawUpdate(
-        'UPDATE $INGREDIENT_TABLE_NAME '
-        'SET $INGREDIENT_COL_IN_SHOPPINGLIST = 0 '
-        'WHERE $INGREDIENT_COL_ID = ?',
+        'UPDATE $_INGREDIENT_TABLE_NAME '
+        'SET $_INGREDIENT_COL_IN_SHOPPINGLIST = 0 '
+        'WHERE $_INGREDIENT_COL_ID = ?',
         [ingredientId]);
 
     if (count < 1) {
@@ -251,7 +252,7 @@ class DatabaseHelper {
     Database db = await this.database;
     List<Ingredient> shoppingList = new List<Ingredient>();
     List<Map<String, dynamic>> result = await db.rawQuery(
-        'SELECT * FROM $INGREDIENT_TABLE_NAME WHERE $INGREDIENT_COL_IN_SHOPPINGLIST > 0;');
+        'SELECT * FROM $_INGREDIENT_TABLE_NAME WHERE $_INGREDIENT_COL_IN_SHOPPINGLIST > 0;');
     for (int index = 0; index < result.length; index++) {
       Ingredient tempIngredient = Ingredient.fromJson(result[index]);
       shoppingList.add(tempIngredient);
@@ -265,7 +266,7 @@ class DatabaseHelper {
   Future<String> getShoppingListAsString() async {
     Database db = await this.database;
     List<Map<String, dynamic>> result = await db.rawQuery(
-        'SELECT * FROM $INGREDIENT_TABLE_NAME WHERE $INGREDIENT_COL_IN_SHOPPINGLIST > 0;');
+        'SELECT * FROM $_INGREDIENT_TABLE_NAME WHERE $_INGREDIENT_COL_IN_SHOPPINGLIST > 0;');
 
     String shoppingList = "Shopping List:\n";
 
