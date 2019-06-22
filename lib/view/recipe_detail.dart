@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import 'package:recipedient/controller/database_helper.dart';
 import 'package:recipedient/model/recipe.dart';
 import 'package:recipedient/widgets/color_palette.dart';
-import 'package:recipedient/widgets/dialog_box.dart';
+import 'package:recipedient/widgets/dialog_boxes.dart';
 import 'package:recipedient/widgets/display_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 

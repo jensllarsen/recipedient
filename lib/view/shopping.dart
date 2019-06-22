@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import 'package:recipedient/controller/database_helper.dart';
 import 'package:recipedient/model/ingredient.dart';
 import 'package:recipedient/widgets/color_palette.dart';
-import 'package:recipedient/widgets/dialog_box.dart';
+import 'package:recipedient/widgets/dialog_boxes.dart';
 import 'package:share/share.dart';
 
 class ShoppingScreen extends StatefulWidget {
