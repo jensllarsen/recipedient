@@ -4,7 +4,7 @@ import 'package:recipedient/view/recipe_detail.dart';
 
 /// Returns a card that displays the [recipe]
 ///
-Widget buildRecipeCard(Recipe recipe, context) {
+Widget buildRecipeCard(Recipe recipe, BuildContext context) {
   return ListTile(
     title: Text(recipe.label),
     subtitle: Text(recipe.source),
