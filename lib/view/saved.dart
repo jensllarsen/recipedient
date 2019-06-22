@@ -11,9 +11,7 @@ class SavedScreen extends StatefulWidget {
 }
 
 class _SavedScreenState extends State<SavedScreen> {
-  DatabaseHelper databaseHelper = new DatabaseHelper();
-
-  List<Recipe> recipes;
+  DatabaseHelper _databaseHelper = new DatabaseHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +19,16 @@ class _SavedScreenState extends State<SavedScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FutureBuilder<List<Recipe>>(
-          future: databaseHelper.getRecipesList(),
+          future: _databaseHelper.getRecipesList(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Container();
             }
             return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return buildRecipeCard(snapshot.data[index], context);
-              },
-            );
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return buildRecipeCard(snapshot.data[index], context);
+                });
           },
         ),
       ),
