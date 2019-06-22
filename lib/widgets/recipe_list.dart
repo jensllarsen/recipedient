@@ -4,18 +4,18 @@ import 'package:recipedient/model/recipe.dart';
 import 'package:recipedient/widgets/recipe_card.dart';
 
 class RecipeList extends StatelessWidget {
-  final String query;
+  final String _query;
 
-  RecipeList(this.query);
+  RecipeList(this._query);
 
   @override
   Widget build(BuildContext context) {
     // if the query is empty don't try to draw a card
-    if (query.isEmpty) {
+    if (_query.isEmpty) {
       return Container();
     }
     return FutureBuilder<List<Recipe>>(
-      future: getMatchingRecipes(query),
+      future: getMatchingRecipes(_query),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Flexible(
