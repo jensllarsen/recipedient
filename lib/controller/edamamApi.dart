@@ -14,7 +14,7 @@ Future<List<Recipe>> getMatchingRecipes(String query) async {
   }
 
   // Otherwise get the query
-  String request = '$edamamEndpoint?q=$query&app_id=$appId&app_key=$appKey';
+  String request = '$edamamEndpoint?q=$query&app_id=$APP_ID&app_key=$APP_KEY';
   try {
     response = await http.get(request);
     // check the status code
