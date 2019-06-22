@@ -21,7 +21,6 @@ class MainScreen extends StatelessWidget {
 class HomeScreenDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return DefaultTabController(
       length: _NUM_TABS,
       child: Scaffold(
@@ -30,7 +29,7 @@ class HomeScreenDisplay extends StatelessWidget {
             IconButton(
               icon: Icon(
                 Icons.info,
-                color: lightPrimaryColor,
+                color: PRIMARY_COLOR_LIGHT,
               ),
               onPressed: () {
                 Navigator.push(
@@ -42,10 +41,10 @@ class HomeScreenDisplay extends StatelessWidget {
               },
             )
           ],
-          backgroundColor: defaultPrimaryColor,
+          backgroundColor: PRIMARY_COLOR_DEFAULT,
           title: Text('Recipedient'),
           bottom: TabBar(
-            indicatorColor: accentColor,
+            indicatorColor: ACCENT_COLOR,
             tabs: [
               Tab(text: 'Search', icon: Icon(Icons.search)),
               Tab(text: 'Saved', icon: Icon(Icons.save)),

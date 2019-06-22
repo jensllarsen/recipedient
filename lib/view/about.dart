@@ -8,7 +8,7 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: accentColor,
+        backgroundColor: ACCENT_COLOR,
         title: Text('Recipedient'),
       ),
       body: Center(

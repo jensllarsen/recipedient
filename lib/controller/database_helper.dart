@@ -246,6 +246,7 @@ class DatabaseHelper {
   }
 
   /// Retrieve shopping list. Retrieve all ingredients that are marked as in the list
+  ///
   Future<List<Ingredient>> getShoppingList() async {
     Database db = await this.database;
     List<Ingredient> shoppingList = new List<Ingredient>();
@@ -260,7 +261,8 @@ class DatabaseHelper {
 
   /// Retrieve shopping list as a List of Strings.
   /// Retrieve all ingredients that are marked as in the list
-  Future<String> getShoppingListAsStrings() async {
+  ///
+  Future<String> getShoppingListAsString() async {
     Database db = await this.database;
     List<Map<String, dynamic>> result = await db.rawQuery(
         'SELECT * FROM $INGREDIENT_TABLE_NAME WHERE $INGREDIENT_COL_IN_SHOPPINGLIST > 0;');

@@ -30,7 +30,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
-                cursorColor: accentColor,
+                cursorColor: ACCENT_COLOR,
                 decoration: InputDecoration(hintText: 'Ingredients'),
                 controller: searchController,
                 onSubmitted: (String value) {
@@ -42,10 +42,10 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
             RaisedButton(
-              color: accentColor,
+              color: ACCENT_COLOR,
               child: Text(
                 "Search",
-                style: TextStyle(color: textPrimaryColor),
+                style: TextStyle(color: PRIMARY_COLOR_TEXT),
               ),
               onPressed: () {
                 displaySnackBar(

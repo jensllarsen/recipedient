@@ -28,7 +28,7 @@ void addIngredientDialogBox(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        backgroundColor: textPrimaryColor,
+        backgroundColor: PRIMARY_COLOR_TEXT,
         title: Text(title),
         content: Text(body),
         actions: <Widget>[
@@ -59,14 +59,13 @@ void removeFromShoppingListDialogBox(BuildContext context, int ingredientId) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        backgroundColor: textPrimaryColor,
+        backgroundColor: PRIMARY_COLOR_TEXT,
         title: Text('Alert'),
         content: Text('Remove from shopping list?'),
         actions: <Widget>[
           FlatButton(
             child: Text("Yes"),
             onPressed: () async {
-              // TODO: remove ingredient from the shopping list
               DatabaseHelper databaseHelper = new DatabaseHelper();
               databaseHelper.removeIngredientFromShoppingList(ingredientId);
               Navigator.of(context).pop();

@@ -47,19 +47,19 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
 
   Widget shareButton() {
     return RaisedButton(
-      color: accentColor,
+      color: ACCENT_COLOR,
       child: Text(
         'Share shopping list',
-        style: TextStyle(color: textPrimaryColor),
+        style: TextStyle(color: PRIMARY_COLOR_TEXT),
       ),
       onPressed: () async {
-        String shoppingList = await databaseHelper.getShoppingListAsStrings();
+        String shoppingList = await databaseHelper.getShoppingListAsString();
         Share.share(shoppingList);
       },
     );
   }
 
-  Widget displayShoppingList(shoppingList) {
+  Widget displayShoppingList(AsyncSnapshot shoppingList) {
     return Flexible(
       // TODO: fix list not updating when item is deleted
       child: Scrollbar(

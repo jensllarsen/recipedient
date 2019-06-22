@@ -17,7 +17,7 @@ class RecipeDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: defaultPrimaryColor,
+        backgroundColor: PRIMARY_COLOR_DEFAULT,
         title: Text(recipe.label),
       ),
       body: Builder(
@@ -65,9 +65,9 @@ class RecipeDetail extends StatelessWidget {
                     child: MaterialButton(
                       child: Text(
                         "Open recipe on ${recipe.source}",
-                        style: TextStyle(color: textPrimaryColor),
+                        style: TextStyle(color: PRIMARY_COLOR_TEXT),
                       ),
-                      color: accentColor,
+                      color: ACCENT_COLOR,
                       onPressed: () async {
                         if (await canLaunch(recipe.url)) {
                           await launch(recipe.url);
@@ -79,14 +79,14 @@ class RecipeDetail extends StatelessWidget {
                     ),
                   ),
                   MaterialButton(
-                    color: accentColor,
+                    color: ACCENT_COLOR,
                     onPressed: () async {
                       _saveRecipeToDatabase(recipe);
                       displaySnackBar(context, 'Adding recipe');
                     },
                     child: Text(
                       "Save Recipe",
-                      style: TextStyle(color: textPrimaryColor),
+                      style: TextStyle(color: PRIMARY_COLOR_TEXT),
                     ),
                   ),
                 ],
