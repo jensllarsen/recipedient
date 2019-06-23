@@ -15,9 +15,17 @@ class AboutScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text("Recipedient was written by Jens Larsen."),
+            Text("Software Development Capstone - C868"),
+            Text("WGU Student ID #000656147"),
+            Text("July 2019"),
             Container(
-              child: Text("Recipedient was written by Jens Larsen."),
+              height: 20,
             ),
+            Container(
+              height: 20,
+            ),
+            Text("Recipe search provided by"),
             Image.asset('resources/edamam.png'),
           ],
         ),
