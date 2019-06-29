@@ -156,7 +156,9 @@ class DatabaseHelper {
         recipe.source,
         recipe.url,
       ]);
-    } on Exception catch (e) {}
+    } on Exception catch (e) {
+      return null;
+    }
 
     if (recipeId < 0) {
       // if the recipe insert was unsuccessful then no point continuing
